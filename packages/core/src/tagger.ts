@@ -8,6 +8,11 @@ export interface TagOptions {
    * "en" (default): guess English and mark the token uncertain. "x": ignore them.
    */
   unknownPolicy?: "en" | "x";
+  /**
+   * Decide ambiguous words ("to", "is", "the", ...) from their neighbours (default true).
+   * When false, each one takes its list default. Used by the evaluation's ablation.
+   */
+  resolveAmbiguous?: boolean;
 }
 
 type Pending = Lang | "AMB" | "UNK";
@@ -89,7 +94,7 @@ function nearestDefinite(decided: readonly Pending[], from: number, step: 1 | -1
  * list, names, then a default for unknown words.
  */
 export function tag(text: string, options: TagOptions = {}): TaggedToken[] {
-  const { unknownPolicy = "en" } = options;
+  const { unknownPolicy = "en", resolveAmbiguous = true } = options;
   const tokens = tokenize(text);
   const decisions = tokens.map(classify);
   const decided = decisions.map((d) => d.lang);
@@ -99,9 +104,10 @@ export function tag(text: string, options: TagOptions = {}): TaggedToken[] {
     if (!decision) return { text: token.text, lang: "X", source: "rule" };
 
     if (decision.lang === "AMB") {
+      const fallback = decision.fallback ?? "EN";
+      if (!resolveAmbiguous) return { text: token.text, lang: fallback, source: "rule" };
       const left = nearestDefinite(decided, i, -1);
       const right = nearestDefinite(decided, i, 1);
-      const fallback = decision.fallback ?? "EN";
       const lang = left && right ? (left === right ? left : fallback) : (left ?? right ?? fallback);
       return { text: token.text, lang, source: "context" };
     }

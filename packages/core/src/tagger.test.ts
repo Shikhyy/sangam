@@ -100,3 +100,19 @@ describe("tag: unknown words", () => {
     expect(tag("")).toEqual([]);
   });
 });
+
+describe("tag: resolveAmbiguous option", () => {
+  it("resolves from neighbours by default", () => {
+    expect(langs("mujhe to pata hai")[1]).toBe("HI");
+  });
+
+  it("uses the list default when switched off", () => {
+    // The default for "to" is English, so the neighbour evidence is ignored.
+    expect(langs("mujhe to pata hai", { resolveAmbiguous: false })).toEqual(["HI", "EN", "HI", "HI"]);
+    expect(tag("mujhe to pata hai", { resolveAmbiguous: false })[1]?.source).toBe("rule");
+  });
+
+  it("does not affect words that are not ambiguous", () => {
+    expect(langs("yaar meeting kal hai", { resolveAmbiguous: false })).toEqual(["HI", "EN", "HI", "HI"]);
+  });
+});
