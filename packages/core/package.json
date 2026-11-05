@@ -1,0 +1,12 @@
+{
+  "name": "@sangam/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure TypeScript: tokenizer, Hindi/English tagger, mix metrics, style profile. No I/O.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
