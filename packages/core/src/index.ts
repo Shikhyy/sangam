@@ -1,6 +1,24 @@
 import { mixMetrics } from "./metrics";
 import { tag } from "./tagger";
 
+export {
+  type CheckOptions,
+  type CheckResult,
+  check,
+  DEFAULT_TOLERANCE,
+  MIN_JUDGED_TOKENS,
+} from "./check";
+export {
+  type Guidance,
+  type GuideInput,
+  guide,
+  type OutputScript,
+  PRIOR_TARGET,
+  REGISTER_LIMITS,
+  type Register,
+  SHARE_CLAMP,
+  type Target,
+} from "./guide";
 export { BALANCED_BAND, type MixMetrics, matrixFromShare, mixMetrics } from "./metrics";
 export {
   buildProfile,
