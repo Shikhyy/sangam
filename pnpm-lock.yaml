@@ -26,6 +26,12 @@ importers:
 
   packages/core: {}
 
+  packages/eval:
+    dependencies:
+      '@sangam/core':
+        specifier: workspace:*
+        version: link:../core
+
   packages/llm:
     dependencies:
       '@anthropic-ai/sdk':
