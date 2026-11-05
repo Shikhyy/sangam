@@ -90,12 +90,20 @@ Response 200:
 ```json
 {
   "target": { "hindiShare": 0.6, "switchRate": 0.3, "matrixLanguage": "HI" },
-  "promptFragment": "Reply in Hinglish, about 60% Hindi. Written in Roman script. Keep English for nouns like 'meeting' and 'payment'. At most two short sentences.",
+  "promptFragment": "Reply in Hinglish, about 60% Hindi and 40% English by word count, matching how the user speaks. Write Hindi words in Roman script (for example: aapka payment kal due hai), never in Devanagari. Switch language inside a sentence only occasionally, mainly for nouns. The user says these words in English, so keep them in English: meeting, payment. Use a polite, friendly tone. Keep the reply to at most 2 short sentences, because it will be spoken aloud.",
   "borrowedWords": ["meeting", "payment"],
-  "avoid": ["slang such as 'yaar' (register is neutral)"]
+  "avoid": ["Devanagari script", "copying the user's slang (yaar, bhai, bro)"],
+  "usedPrior": false
 }
 ```
-If `profile.confidence` is `low`, the response targets a balanced mix and says so in `promptFragment`.
+
+Rules (implemented in `packages/core/src/guide.ts`):
+
+- If `profile.confidence` is `low`, `usedPrior` is `true` and the target is a balanced mix (50% Hindi, 0.2 switch rate).
+- The target Hindi share mirrors the profile, clamped to 0.1 to 0.9, so the agent never goes fully one-language.
+- The target switch rate is the profile's, capped by `register`: formal 0.2, neutral 0.4, casual 0.6.
+- Slang (yaar, bhai, bro, and similar) is never reused unless `register` is `casual`.
+- `borrowedWords` holds at most 8 words, with names and numbers left out.
 
 ## POST /api/v1/check (Should-tier)
 
@@ -118,10 +126,12 @@ Response 200:
   "deltaHindiShare": 0.07,
   "deltaCmi": 4.2,
   "deltaSwitchRate": 0.05,
+  "judged": true,
   "pass": true
 }
 ```
-`pass` is true when `deltaHindiShare <= 0.15`.
+
+`pass` is true when `deltaHindiShare <= 0.15` (the tolerance can be changed). Replies with fewer than 4 Hindi or English tokens are too short to judge fairly: they return `judged: false` and always pass. `deltaHindiShare` is the "mirror error" used in the evaluation.
 
 ## Errors
 
