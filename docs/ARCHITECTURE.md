@@ -149,10 +149,16 @@ Tag the draft reply, compute `H`, `CMI`, `SR`. Report `deltaH = |H_reply − H_t
 
 ## 5. LLM layer (`packages/llm`)
 
-- Interface: `reply({ history, guidance, register }) -> AsyncIterable<string>` and `tagUnknowns(tokens) -> tags`.
-- Real provider: a fast Claude model via the Anthropic API (`ANTHROPIC_API_KEY`). The interface also accepts any OpenAI-compatible endpoint.
-- Mock provider: a deterministic template engine for a few scenarios, so demos and tests never need a key.
-- Temperature low. Strict JSON for tagging. Reply length capped at about 2 sentences for voice.
+- Interface: `reply({ history, guidance, persona, targetHindiShare, signal }) -> AsyncIterable<string>`. A refusal throws `LlmRefusalError`; a malformed request throws `LlmRequestError`. (`tagUnknowns` for the tagger fallback is not built yet.)
+- Real provider (`AnthropicProvider`): streams with the official `@anthropic-ai/sdk` through `client.beta.messages.stream`.
+  - Default model `claude-opus-5-5`, set with `SANGAM_LLM_MODEL`. For lower latency a smaller model such as `claude-haiku-5-5` is the obvious experiment; it is a cost and quality decision, so it is left to the owner.
+  - Thinking is always on for this model, so `effort` is the only latency control. It defaults to `low` (`SANGAM_LLM_EFFORT`).
+  - No `temperature`, `top_p`, `top_k`, `thinking` or forced `tool_choice` is sent; this model rejects them.
+  - The server-side refusal fallback (`fallbacks: "default"`, beta `server-side-fallback-2026-07-01`) is on by default and can be switched off.
+  - It has been tested only against a fake client. It has not yet been run against the live API.
+- Mock provider (`MockProvider`): three canned replies chosen by `targetHindiShare`, streamed word by word, so demos and tests never need a key. A test checks that each script really has the Hindi share it is filed under.
+- `createProvider(process.env)` returns the mock unless `SANGAM_MODE=live`, and live mode requires `ANTHROPIC_API_KEY`.
+- Replies are spoken, so the system prompt forbids markdown and the guidance caps length at about two short sentences.
 
 ## 6. Realtime service (`apps/realtime`), optional upgrade lane
 
