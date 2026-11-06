@@ -3,7 +3,9 @@
 import { buildProfile, check, guide, mixMetrics, type OutputScript, type Register, tag } from "@sangam/core";
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { earlierUserTokens, type Turn } from "../lib/history";
+import { requestReply } from "../lib/reply-client";
 import { buildSnippet } from "../lib/snippet";
+import { type RecognitionLike, recognitionCtor } from "../lib/speech";
 import { summarize } from "../lib/summary";
 import { Ribbon } from "./Ribbon";
 
@@ -27,72 +29,6 @@ const NO_REPLY: Reply = { text: "", gap: null };
 const IDLE: Replies = { status: "idle", typical: NO_REPLY, sangam: NO_REPLY, provider: "mock", error: null };
 /** A reply within this many points of the user's mix counts as matched. */
 const MATCHED_GAP = 15;
-
-interface RecognitionLike {
-  lang: string;
-  interimResults: boolean;
-  continuous: boolean;
-  onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
-  onerror: (() => void) | null;
-  onend: (() => void) | null;
-  start(): void;
-  stop(): void;
-}
-type RecognitionCtor = new () => RecognitionLike;
-
-function recognitionCtor(): RecognitionCtor | null {
-  const w = window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor };
-  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
-}
-
-interface ReplyBody {
-  mode: "typical" | "sangam";
-  history: Turn[];
-  guidance?: string;
-  targetHindiShare?: number;
-}
-
-async function requestReply(
-  body: ReplyBody,
-  onText: (text: string) => void,
-): Promise<{ text: string; provider: string }> {
-  const response = await fetch("/api/reply", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    let message = "Couldn't get a reply. Try again.";
-    try {
-      const data = (await response.json()) as { error?: string };
-      if (data.error) message = data.error;
-    } catch {
-      // keep the generic message
-    }
-    throw new Error(message);
-  }
-
-  const provider = response.headers.get("x-sangam-provider") ?? "mock";
-  const reader = response.body?.getReader();
-  if (!reader) {
-    const text = await response.text();
-    onText(text);
-    return { text, provider };
-  }
-
-  const decoder = new TextDecoder();
-  let text = "";
-  let chunk = await reader.read();
-  while (!chunk.done) {
-    text += decoder.decode(chunk.value, { stream: true });
-    onText(text);
-    chunk = await reader.read();
-  }
-  text += decoder.decode();
-  onText(text);
-  return { text, provider };
-}
 
 function Icon({ children }: { children: ReactNode }) {
   return (
