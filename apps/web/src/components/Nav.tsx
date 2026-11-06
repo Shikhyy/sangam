@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Logo } from "./Logo";
 
 const LINKS = [
   { id: "how", label: "How it works" },
@@ -16,24 +17,6 @@ const stroke = {
   strokeLinecap: "round",
   strokeLinejoin: "round",
 } as const;
-
-function Mark() {
-  return (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 32 32"
-      fill="none"
-      role="img"
-      aria-label="Sangam"
-      style={{ strokeWidth: 3.4, strokeLinecap: "round" }}
-    >
-      <path d="M3 9.5C12.5 9.5 12.5 16 19.5 16" style={{ stroke: "var(--hi-s)" }} />
-      <path d="M3 22.5C12.5 22.5 12.5 16 19.5 16" style={{ stroke: "var(--en-s)" }} />
-      <path d="M19.5 16H29" style={{ stroke: "var(--ink)" }} />
-    </svg>
-  );
-}
 
 /**
  * A floating glass bar. It tightens once the page scrolls, marks the section you are reading, and
@@ -74,8 +57,7 @@ export function Nav({ current = "home" }: { current?: "home" | "playground" }) {
     <header className={stuck ? "nv is-stuck" : "nv"}>
       <div className="nv-in">
         <Link href="/" className="nv-logo">
-          <Mark />
-          Sangam
+          <Logo />
         </Link>
 
         <nav className="nv-links" aria-label="Main">

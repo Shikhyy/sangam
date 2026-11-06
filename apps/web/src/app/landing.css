@@ -20,24 +20,6 @@
 
 /* ---- Hero ---- */
 
-.vs-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 32px;
-  padding: 0 14px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  font: 500 12px / 1 var(--font-ui);
-  color: var(--ink-2);
-}
-.vs-chip i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--hi-s);
-}
 .vs .vs-h1 {
   position: relative;
   margin: 40px 0 0;
@@ -758,12 +740,6 @@
   align-items: center;
   text-align: center;
   width: 100%;
-}
-.hp-head .vs-chip {
-  background: rgba(252, 251, 246, 0.7);
-  border-color: rgba(255, 255, 255, 0.7);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 .hp-head .vs-sub {
   color: #25221d;

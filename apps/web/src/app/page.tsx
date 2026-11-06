@@ -83,9 +83,6 @@ export default function Home() {
       <div className="vs-wrap vs-top">
         <Instrument>
           <div className="hp-head">
-            <span className="vs-chip">
-              <i /> Hindi · English · everything between
-            </span>
             <h1 className="vs-h1">
               <Bracket side="l" />
               {HEADLINE.map(({ word, italic }, index) => (
