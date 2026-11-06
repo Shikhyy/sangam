@@ -1,7 +1,7 @@
 "use client";
 
 import { buildProfile, check, guide, mixMetrics, tag } from "@sangam/core";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { earlierUserTokens, type Turn } from "../lib/history";
 import { requestReply } from "../lib/reply-client";
 import { type RecognitionLike, recognitionCtor } from "../lib/speech";
@@ -40,7 +40,7 @@ const stroke = {
  * how much of it is warm is your Hindi share, how folded and finely lined it is is how often you
  * switch, and how fast it moves is how much you are talking.
  */
-export function Instrument() {
+export function Instrument({ children }: { children?: ReactNode }) {
   const [text, setText] = useState(START);
   const [history, setHistory] = useState<Turn[]>([]);
   const [replies, setReplies] = useState<Replies>(IDLE);
@@ -176,8 +176,9 @@ export function Instrument() {
   ] as const;
 
   return (
-    <div className="fr">
+    <div className="fr hero">
       <GradientField className="fr-bg" control={control} />
+      {children}
 
       <div className="pc">
         <div className="pc-top">
@@ -203,7 +204,7 @@ export function Instrument() {
         <div className="pc-actions">
           <button
             type="button"
-            className={listening ? "pc-mic on" : "pc-mic"}
+            className={listening ? "btn btn-secondary btn-icon pc-mic on" : "btn btn-secondary btn-icon pc-mic"}
             onClick={toggleMic}
             aria-pressed={listening}
             aria-label={listening ? "Stop listening" : "Speak instead of typing"}
@@ -215,7 +216,7 @@ export function Instrument() {
           </button>
           <button
             type="button"
-            className="pc-go"
+            className="btn btn-primary"
             onClick={send}
             disabled={!text.trim() || replies.status === "loading"}
           >

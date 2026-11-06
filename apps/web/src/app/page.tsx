@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { GradientField } from "../components/GradientField";
 import { Instrument } from "../components/Instrument";
+import { Nav } from "../components/Nav";
 import { Reveal } from "../components/Reveal";
 import "./landing.css";
 
@@ -74,78 +75,43 @@ const Bracket = ({ side }: { side: "l" | "r" }) => (
   </svg>
 );
 
-const Mark = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 32 32"
-    fill="none"
-    role="img"
-    aria-label="Sangam"
-    style={{ strokeWidth: 3.4, strokeLinecap: "round" }}
-  >
-    <path d="M3 9.5C12.5 9.5 12.5 16 19.5 16" style={{ stroke: "var(--hi-s)" }} />
-    <path d="M3 22.5C12.5 22.5 12.5 16 19.5 16" style={{ stroke: "var(--en-s)" }} />
-    <path d="M19.5 16H29" style={{ stroke: "var(--ink)" }} />
-  </svg>
-);
-
 export default function Home() {
   return (
     <main className="vs">
-      <header className="vs-nav">
-        <div className="vs-nav-in">
-          <Link href="/" className="vs-logo">
-            <Mark />
-            Sangam
-          </Link>
-          <nav className="vs-links" aria-label="Main">
-            <a href="#how">How it works</a>
-            <a href="#developers">Developers</a>
-            <a href="#results">Results</a>
-          </nav>
-          <div className="vs-actions">
-            <a href="#results" className="plain">
-              Results
-            </a>
-            <Link href="/playground" className="vs-btn sm">
-              Playground
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Nav />
 
-      <section className="vs-hero">
-        <span className="vs-chip">
-          <i /> Hindi · English · everything between
-        </span>
-        <h1 className="vs-h1">
-          <Bracket side="l" />
-          {HEADLINE.map(({ word, italic }, index) => (
-            <span key={word} className="bw" style={{ "--i": index } as React.CSSProperties}>
-              {italic ? <em>{word}</em> : word}{" "}
+      <div className="vs-wrap vs-top">
+        <Instrument>
+          <div className="hp-head">
+            <span className="vs-chip">
+              <i /> Hindi · English · everything between
             </span>
-          ))}
-          <Bracket side="r" />
-        </h1>
-        <p className="vs-sub">
-          Most agents answer in textbook Hindi or textbook English. Sangam measures how you really mix the two, then
-          replies in the same mix.
-        </p>
-        <div className="vs-cta">
-          <Link href="/playground" className="vs-btn">
-            Try the playground
-          </Link>
-          <a href="#how" className="vs-btn ghost">
-            See how it works
-          </a>
-        </div>
-      </section>
-
-      <div className="vs-wrap">
-        <Reveal>
-          <Instrument />
-        </Reveal>
+            <h1 className="vs-h1">
+              <Bracket side="l" />
+              {HEADLINE.map(({ word, italic }, index) => (
+                <span key={word} className="bw" style={{ "--i": index } as React.CSSProperties}>
+                  {italic ? <em>{word}</em> : word}{" "}
+                </span>
+              ))}
+              <Bracket side="r" />
+            </h1>
+            <p className="vs-sub">
+              Most agents answer in textbook Hindi or textbook English. Sangam measures how you really mix the two, then
+              replies in the same mix.
+            </p>
+            <div className="vs-cta">
+              <Link href="/playground" className="btn btn-primary btn-lg">
+                Try the playground
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+              <a href="#how" className="btn btn-secondary btn-lg">
+                See how it works
+              </a>
+            </div>
+          </div>
+        </Instrument>
       </div>
 
       <section className="vs-sec" id="how">
@@ -335,7 +301,7 @@ export default function Home() {
               Where two streams <em>meet</em>
             </h2>
             <div className="vs-cta" style={{ opacity: 1, animation: "none" }}>
-              <Link href="/playground" className="vs-btn">
+              <Link href="/playground" className="btn btn-primary btn-lg">
                 Try the playground
               </Link>
             </div>

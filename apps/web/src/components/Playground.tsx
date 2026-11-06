@@ -7,6 +7,8 @@ import { requestReply } from "../lib/reply-client";
 import { buildSnippet } from "../lib/snippet";
 import { type RecognitionLike, recognitionCtor } from "../lib/speech";
 import { summarize } from "../lib/summary";
+import { type FieldControl, GradientField } from "./GradientField";
+import { Nav } from "./Nav";
 import { Ribbon } from "./Ribbon";
 
 interface Reply {
@@ -88,7 +90,7 @@ function ReplyCard(props: {
         display: "flex",
         flexDirection: "column",
         gap: 12,
-        ...(featured ? { border: "2px solid var(--hi-s)" } : {}),
+        ...(featured ? { border: "1.5px solid var(--olive)" } : {}),
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", minHeight: 24 }}>
@@ -147,6 +149,21 @@ export function Playground() {
     [profile, register, script, maxSentences, tokens],
   );
   const summary = useMemo(() => summarize(metrics, profile.styleType), [metrics, profile.styleType]);
+  const field = useRef<FieldControl>({ share: 0.5, tangle: 0.3, level: 0 });
+
+  useEffect(() => {
+    field.current.share = metrics.n > 0 ? metrics.hindiShare : 0.5;
+    field.current.tangle = Math.min(1, metrics.switchRate * 1.6);
+  }, [metrics]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `text` is a trigger, not a value used here: every keystroke re-energises the painting
+  useEffect(() => {
+    field.current.level = 1;
+    const id = window.setTimeout(() => {
+      field.current.level = listening ? 0.55 : 0;
+    }, 900);
+    return () => window.clearTimeout(id);
+  }, [text, listening]);
   const snippet = useMemo(
     () => buildSnippet({ register, outputScript: script, maxSentences }),
     [register, script, maxSentences],
@@ -250,288 +267,282 @@ export function Playground() {
   const hasWords = metrics.n > 0;
 
   return (
-    <div className="pg">
-      <header className="pg-head">
-        <div className="pg-brand">
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <svg
-              width="30"
-              height="30"
-              viewBox="0 0 32 32"
-              fill="none"
-              role="img"
-              aria-label="Sangam"
-              style={{ strokeWidth: 3.4, strokeLinecap: "round" }}
-            >
-              <path d="M3 9.5C12.5 9.5 12.5 16 19.5 16" style={{ stroke: "var(--hi-s)" }} />
-              <path d="M3 22.5C12.5 22.5 12.5 16 19.5 16" style={{ stroke: "var(--en-s)" }} />
-              <path d="M19.5 16H29" style={{ stroke: "var(--ink)" }} />
-            </svg>
-            <span style={{ font: "700 21px/1 var(--font-display)", letterSpacing: "-.03em" }}>Sangam</span>
+    <>
+      <Nav current="playground" />
+      <div className="pg">
+        <div className="pg-title">
+          <div>
+            <p className="lab">Playground</p>
+            <h1>
+              Try it on <em>your own words</em>
+            </h1>
           </div>
-          <nav aria-label="Main">
-            <a href="/playground" className="nav-link on" aria-current="page">
-              Playground
-            </a>
-          </nav>
-        </div>
-        <span className={`badge ${live ? "badge-ok" : "badge-neutral"}`}>
-          <span className="dot" />
-          {live ? "live" : "mock mode"}
-        </span>
-      </header>
-
-      <section className="hero pg-hero" aria-label="You say">
-        <div className="pg-hero-top">
-          <p className="lab" style={{ color: "var(--hero-ink-2)" }}>
-            You say
-          </p>
-          <div className="meta">
-            <span>
-              <Icon>
-                <path d="M4 7h16M4 12h10M4 17h13" />
-              </Icon>
-              {metrics.n} {metrics.n === 1 ? "word" : "words"}
-            </span>
-            {hasWords && profile.confidence === "low" ? (
-              <span>
-                <Icon>
-                  <path d="M12 4l9 16H3zM12 10v4M12 17h.01" />
-                </Icon>
-                low confidence
-              </span>
-            ) : null}
-          </div>
-        </div>
-
-        <form
-          className="pg-say"
-          onSubmit={(event) => {
-            event.preventDefault();
-            void send();
-          }}
-        >
-          <label htmlFor="say" className="sr-only">
-            Say or type something in Hinglish
-          </label>
-          <input
-            id="say"
-            className="pg-input"
-            value={text}
-            placeholder="Say or type something in your own Hinglish"
-            autoComplete="off"
-            onChange={(event) => {
-              setText(event.target.value);
-              setNotice(null);
-            }}
-          />
-          <button
-            type="button"
-            className="pg-mic"
-            aria-pressed={listening}
-            aria-label={listening ? "Stop listening" : "Speak"}
-            onClick={toggleMic}
-          >
-            <Icon>
-              <rect x="9" y="3" width="6" height="11" rx="3" />
-              <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
-            </Icon>
-          </button>
-        </form>
-
-        <div className="pg-examples">
-          <span className="small" style={{ color: "var(--hero-ink-2)" }}>
-            Try
+          <span className={`badge ${live ? "badge-ok" : "badge-neutral"}`}>
+            <span className="dot" />
+            {live ? "live" : "mock mode"}
           </span>
-          {EXAMPLES.map((example) => (
-            <button key={example} type="button" className="pg-chip" onClick={() => setText(example)}>
-              {example}
-            </button>
-          ))}
         </div>
 
-        <div className="pg-summary">
-          <p className="say" style={{ maxWidth: 900 }} aria-live="polite">
-            {summary.map((part, index) =>
-              part.highlight ? (
-                // biome-ignore lint/suspicious/noArrayIndexKey: the parts are rebuilt as a whole each time
-                <span key={index} className="hl">
-                  {part.text}
+        <section className="fr pg-frame" aria-label="You say">
+          <GradientField className="fr-bg" control={field} />
+          <div className="pc pg-card">
+            <div className="pg-hero-top">
+              <p className="lab">You say</p>
+              <div className="meta">
+                <span>
+                  <Icon>
+                    <path d="M4 7h16M4 12h10M4 17h13" />
+                  </Icon>
+                  {metrics.n} {metrics.n === 1 ? "word" : "words"}
                 </span>
-              ) : (
-                // biome-ignore lint/suspicious/noArrayIndexKey: the parts are rebuilt as a whole each time
-                <span key={index}>{part.text}</span>
-              ),
-            )}
-          </p>
-          <button type="button" className="btn btn-inverse" onClick={() => void send()}>
-            Get replies
-            <Icon>
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </Icon>
-          </button>
-        </div>
+                {hasWords && profile.confidence === "low" ? (
+                  <span>
+                    <Icon>
+                      <path d="M12 4l9 16H3zM12 10v4M12 17h.01" />
+                    </Icon>
+                    low confidence
+                  </span>
+                ) : null}
+              </div>
+            </div>
 
-        {notice ? (
-          <p className="small" role="status" style={{ color: "var(--hero-ink-2)" }}>
-            {notice}
-          </p>
-        ) : null}
-      </section>
-
-      <main className="pg-main">
-        <div className="pg-col">
-          <section className="card" style={{ padding: "20px 24px" }} aria-label="How you mix">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: 12,
-                flexWrap: "wrap",
-                marginBottom: 10,
+            <form
+              className="pg-say"
+              onSubmit={(event) => {
+                event.preventDefault();
+                void send();
               }}
             >
-              <p className="lab">How you mix</p>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-                <span className="small" style={{ fontSize: 13 }}>
-                  <span className="chip chip-hi" style={{ height: 22, fontSize: 12, marginRight: 6 }}>
-                    हिंदी
-                  </span>
-                  upper lane
-                </span>
-                <span className="small" style={{ fontSize: 13 }}>
-                  <span className="chip chip-en" style={{ height: 22, fontSize: 12, marginRight: 6 }}>
-                    English
-                  </span>
-                  lower lane
-                </span>
-              </div>
-            </div>
-            <Ribbon tokens={tokens} />
-            <div className="pg-stats">
-              <div className="tile">
-                <p className="stat">{hasWords ? percent(metrics.hindiShare) : "-"}</p>
-                <p className="lab" style={{ marginTop: 6 }}>
-                  Hindi share
-                </p>
-              </div>
-              <div className="tile">
-                <p className="stat">{hasWords ? metrics.cmi.toFixed(1) : "-"}</p>
-                <p className="lab" style={{ marginTop: 6 }}>
-                  Mixing index
-                </p>
-              </div>
-              <div className="tile">
-                <p className="stat">{hasWords ? percent(metrics.switchRate) : "-"}</p>
-                <p className="lab" style={{ marginTop: 6 }}>
-                  Switch rate
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="pg-replies" aria-label="Compare replies" aria-live="polite">
-            <ReplyCard title="Typical agent" reply={replies.typical} status={replies.status} onPlay={play} />
-            <ReplyCard title="Sangam" featured reply={replies.sangam} status={replies.status} onPlay={play} />
-          </section>
-          {replies.status === "error" ? (
-            <p className="small" role="alert" style={{ color: "var(--bad)" }}>
-              {replies.error}
-            </p>
-          ) : null}
-        </div>
-
-        <aside className="pg-col" aria-label="Profile and settings">
-          <section className="card" style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 10 }}>
-            <p className="lab">Your style</p>
-            <div className="row">
-              <span className="ic">
+              <label htmlFor="say" className="sr-only">
+                Say or type something in Hinglish
+              </label>
+              <input
+                id="say"
+                className="pg-input"
+                value={text}
+                placeholder="Say or type something in your own Hinglish"
+                autoComplete="off"
+                onChange={(event) => {
+                  setText(event.target.value);
+                  setNotice(null);
+                }}
+              />
+              <button
+                type="button"
+                className="btn btn-secondary btn-icon pg-mic"
+                aria-pressed={listening}
+                aria-label={listening ? "Stop listening" : "Speak"}
+                onClick={toggleMic}
+              >
                 <Icon>
-                  <path d="M4 8h12l-3-3M20 16H8l3 3" />
+                  <rect x="9" y="3" width="6" height="11" rx="3" />
+                  <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
                 </Icon>
-              </span>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ font: "700 16px/1.3 var(--font-ui)", color: "var(--ink)" }}>
-                  {hasWords ? profile.styleType : "Not yet known"}
-                </p>
-                <p className="small" style={{ fontSize: 13 }}>
-                  Based on {profile.tokenCount} {profile.tokenCount === 1 ? "word" : "words"}
-                </p>
-              </div>
-              {hasWords && profile.confidence === "low" ? <span className="badge badge-warn">low</span> : null}
-            </div>
-            <div className="row">
-              <span className="ic en">
-                <Icon>
-                  <path d="M5 6h14M9 6v12M15 12h4M15 18h4" />
-                </Icon>
-              </span>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ font: "700 16px/1.3 var(--font-ui)", color: "var(--ink)" }}>
-                  {profile.signatureWords.length > 0 ? profile.signatureWords.join(", ") : "None yet"}
-                </p>
-                <p className="small" style={{ fontSize: 13 }}>
-                  You say these in {minority}
-                </p>
-              </div>
-            </div>
-          </section>
+              </button>
+            </form>
 
-          <section className="card" style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 14 }}>
-            <p className="lab">Reply settings</p>
-            <Segmented
-              label="Register"
-              value={register}
-              onChange={setRegister}
-              options={[
-                { value: "formal", label: "Formal" },
-                { value: "neutral", label: "Neutral" },
-                { value: "casual", label: "Casual" },
-              ]}
-            />
-            <Segmented
-              label="Hindi script"
-              value={script}
-              onChange={setScript}
-              options={[
-                { value: "roman", label: "Roman" },
-                { value: "devanagari", label: "देवनागरी" },
-              ]}
-            />
-            <Segmented
-              label="Length"
-              value={maxSentences}
-              onChange={setMaxSentences}
-              options={[
-                { value: 1, label: "1 sentence" },
-                { value: 2, label: "2 sentences" },
-              ]}
-            />
-          </section>
+            <div className="pg-examples">
+              <span className="small">Try</span>
+              {EXAMPLES.map((example) => (
+                <button key={example} type="button" className="pg-chip" onClick={() => setText(example)}>
+                  {example}
+                </button>
+              ))}
+            </div>
 
-          <section className="card" style={{ padding: "16px 18px", display: "flex", flexDirection: "column", gap: 10 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <p className="lab">Use it in your app</p>
-              <button type="button" className="btn btn-secondary btn-sm" onClick={copyCode}>
+            <div className="pg-summary">
+              <p className="say" style={{ maxWidth: 900 }} aria-live="polite">
+                {summary.map((part, index) =>
+                  part.highlight ? (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: the parts are rebuilt as a whole each time
+                    <span key={index} className="hl">
+                      {part.text}
+                    </span>
+                  ) : (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: the parts are rebuilt as a whole each time
+                    <span key={index}>{part.text}</span>
+                  ),
+                )}
+              </p>
+              <button type="button" className="btn btn-primary" onClick={() => void send()}>
+                Get replies
                 <Icon>
-                  <rect x="8" y="8" width="11" height="11" rx="2" />
-                  <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                  <path d="M5 12h14M13 6l6 6-6 6" />
                 </Icon>
-                Copy
               </button>
             </div>
-            <pre className="code" style={{ margin: 0 }}>
-              <code>{snippet}</code>
-            </pre>
-            <p className="small" style={{ fontSize: 13 }}>
-              {live
-                ? "Your text is sent to the language model provider to write replies."
-                : "Mock mode: replies are scripted. Nothing you type is stored."}
-            </p>
-          </section>
-        </aside>
-      </main>
-    </div>
+
+            {notice ? (
+              <p className="small" role="status">
+                {notice}
+              </p>
+            ) : null}
+          </div>
+        </section>
+
+        <main className="pg-main">
+          <div className="pg-col">
+            <section className="card" style={{ padding: "20px 24px" }} aria-label="How you mix">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 12,
+                  flexWrap: "wrap",
+                  marginBottom: 10,
+                }}
+              >
+                <p className="lab">How you mix</p>
+                <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+                  <span className="small" style={{ fontSize: 13 }}>
+                    <span className="chip chip-hi" style={{ height: 22, fontSize: 12, marginRight: 6 }}>
+                      हिंदी
+                    </span>
+                    upper lane
+                  </span>
+                  <span className="small" style={{ fontSize: 13 }}>
+                    <span className="chip chip-en" style={{ height: 22, fontSize: 12, marginRight: 6 }}>
+                      English
+                    </span>
+                    lower lane
+                  </span>
+                </div>
+              </div>
+              <Ribbon tokens={tokens} />
+              <div className="pg-stats">
+                <div className="tile">
+                  <p className="stat">{hasWords ? percent(metrics.hindiShare) : "-"}</p>
+                  <p className="lab" style={{ marginTop: 6 }}>
+                    Hindi share
+                  </p>
+                </div>
+                <div className="tile">
+                  <p className="stat">{hasWords ? metrics.cmi.toFixed(1) : "-"}</p>
+                  <p className="lab" style={{ marginTop: 6 }}>
+                    Mixing index
+                  </p>
+                </div>
+                <div className="tile">
+                  <p className="stat">{hasWords ? percent(metrics.switchRate) : "-"}</p>
+                  <p className="lab" style={{ marginTop: 6 }}>
+                    Switch rate
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section className="pg-replies" aria-label="Compare replies" aria-live="polite">
+              <ReplyCard title="Typical agent" reply={replies.typical} status={replies.status} onPlay={play} />
+              <ReplyCard title="Sangam" featured reply={replies.sangam} status={replies.status} onPlay={play} />
+            </section>
+            {replies.status === "error" ? (
+              <p className="small" role="alert" style={{ color: "var(--bad)" }}>
+                {replies.error}
+              </p>
+            ) : null}
+          </div>
+
+          <aside className="pg-col" aria-label="Profile and settings">
+            <section
+              className="card"
+              style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 10 }}
+            >
+              <p className="lab">Your style</p>
+              <div className="row">
+                <span className="ic">
+                  <Icon>
+                    <path d="M4 8h12l-3-3M20 16H8l3 3" />
+                  </Icon>
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ font: "700 16px/1.3 var(--font-ui)", color: "var(--ink)" }}>
+                    {hasWords ? profile.styleType : "Not yet known"}
+                  </p>
+                  <p className="small" style={{ fontSize: 13 }}>
+                    Based on {profile.tokenCount} {profile.tokenCount === 1 ? "word" : "words"}
+                  </p>
+                </div>
+                {hasWords && profile.confidence === "low" ? <span className="badge badge-warn">low</span> : null}
+              </div>
+              <div className="row">
+                <span className="ic en">
+                  <Icon>
+                    <path d="M5 6h14M9 6v12M15 12h4M15 18h4" />
+                  </Icon>
+                </span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ font: "700 16px/1.3 var(--font-ui)", color: "var(--ink)" }}>
+                    {profile.signatureWords.length > 0 ? profile.signatureWords.join(", ") : "None yet"}
+                  </p>
+                  <p className="small" style={{ fontSize: 13 }}>
+                    You say these in {minority}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section
+              className="card"
+              style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 14 }}
+            >
+              <p className="lab">Reply settings</p>
+              <Segmented
+                label="Register"
+                value={register}
+                onChange={setRegister}
+                options={[
+                  { value: "formal", label: "Formal" },
+                  { value: "neutral", label: "Neutral" },
+                  { value: "casual", label: "Casual" },
+                ]}
+              />
+              <Segmented
+                label="Hindi script"
+                value={script}
+                onChange={setScript}
+                options={[
+                  { value: "roman", label: "Roman" },
+                  { value: "devanagari", label: "देवनागरी" },
+                ]}
+              />
+              <Segmented
+                label="Length"
+                value={maxSentences}
+                onChange={setMaxSentences}
+                options={[
+                  { value: 1, label: "1 sentence" },
+                  { value: 2, label: "2 sentences" },
+                ]}
+              />
+            </section>
+
+            <section
+              className="card"
+              style={{ padding: "16px 18px", display: "flex", flexDirection: "column", gap: 10 }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <p className="lab">Use it in your app</p>
+                <button type="button" className="btn btn-secondary btn-sm" onClick={copyCode}>
+                  <Icon>
+                    <rect x="8" y="8" width="11" height="11" rx="2" />
+                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                  </Icon>
+                  Copy
+                </button>
+              </div>
+              <pre className="code" style={{ margin: 0 }}>
+                <code>{snippet}</code>
+              </pre>
+              <p className="small" style={{ fontSize: 13 }}>
+                {live
+                  ? "Your text is sent to the language model provider to write replies."
+                  : "Mock mode: replies are scripted. Nothing you type is stored."}
+              </p>
+            </section>
+          </aside>
+        </main>
+      </div>
+    </>
   );
 }
