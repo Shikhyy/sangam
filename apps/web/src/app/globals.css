@@ -1,65 +1,69 @@
 :root,
 [data-theme="light"] {
-  --ground: #e9e5db;
-  --surface: #f7f4ed;
-  --raised: #fcfaf6;
-  --sunken: #dfdacd;
-  --line: #d3cdbe;
-  --ctl: #857e6e;
-  --ink: #12110f;
-  --ink-2: #45413a;
-  --ink-3: #5f584d;
-  --on-ink: #f7f4ed;
-  --hi: #a03c22;
-  --hi-t: #f4dacf;
-  --hi-s: #d4613f;
-  --en: #1b6657;
-  --en-t: #d0e7df;
-  --en-s: #3c9a86;
-  --ok: #2b6736;
-  --ok-t: #d9e9d5;
-  --warn: #7f5200;
-  --warn-t: #f3e1b2;
-  --bad: #ae2340;
-  --bad-t: #f7d6dc;
-  --focus: #12110f;
-  --hero-bg: #0d0705;
-  --hero-ink: #f0ebdf;
-  --hero-ink-2: #b9b2a3;
-  --hero-hl: #f28b66;
-  --hero-chip: #1f1510;
+  --ground: #f2efe4;
+  --surface: #f8f6ee;
+  --raised: #fcfbf6;
+  --sunken: #e9e5d7;
+  --line: #dcd7c6;
+  --ctl: #8a8574;
+  --ink: #26231e;
+  --ink-2: #524e45;
+  --ink-3: #6b665b;
+  --on-ink: #f6f3e9;
+  --olive: #5b5d43;
+  --olive-2: #494b35;
+  --hi: #a8460a;
+  --hi-t: #ffe2c4;
+  --hi-s: #ff8a1f;
+  --en: #2e2468;
+  --en-t: #e6e2f5;
+  --en-s: #3d2f7a;
+  --ok: #2f6b3a;
+  --ok-t: #dcebd6;
+  --warn: #8a4a00;
+  --warn-t: #f6e2b8;
+  --bad: #a3233f;
+  --bad-t: #f6d9de;
+  --focus: #26231e;
+  --hero-bg: #1c1a17;
+  --hero-ink: #f2efe4;
+  --hero-ink-2: #b4afa0;
+  --hero-hl: #ff9a3c;
+  --hero-chip: #2a2723;
+  --hero-en: #a99bff;
   --r-s: 10px;
   --r-m: 14px;
   --r-l: 22px;
   --r-xl: 30px;
-  --font-ui: var(--font-manrope), var(--font-devanagari), system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-devanagari), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+  --font-ui: var(--font-geist), var(--font-devanagari), system-ui, sans-serif;
+  --font-display: var(--font-geist), var(--font-devanagari), system-ui, sans-serif;
+  --font-serif: var(--font-serif-latin), var(--font-serif-devanagari), Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
 }
 [data-theme="dark"] {
-  --ground: #0e0d0c;
-  --surface: #1a1815;
-  --raised: #201e1a;
-  --sunken: #131210;
-  --line: #2d2a25;
-  --ctl: #7b7466;
-  --ink: #f0ebdf;
-  --ink-2: #bdb6a7;
-  --ink-3: #9a9384;
-  --on-ink: #0e0d0c;
-  --hi: #f2a184;
-  --hi-t: #3a2118;
-  --hi-s: #f28b66;
-  --en: #80d2be;
-  --en-t: #14332c;
-  --en-s: #46b59e;
+  --ground: #1c1a17;
+  --surface: #25221e;
+  --raised: #2a2723;
+  --sunken: #181613;
+  --line: #3a3630;
+  --ctl: #8a8574;
+  --ink: #f2efe4;
+  --ink-2: #c4bfb0;
+  --ink-3: #a09b8c;
+  --on-ink: #1c1a17;
+  --hi: #ffae66;
+  --hi-t: #4a2a10;
+  --hi-s: #ff9a3c;
+  --en: #b8adff;
+  --en-t: #2a2358;
+  --en-s: #8a7aff;
   --ok: #8cd79a;
   --ok-t: #17301b;
   --warn: #edc470;
   --warn-t: #352708;
   --bad: #ff9dae;
   --bad-t: #3e1219;
-  --focus: #f0ebdf;
+  --focus: #f2efe4;
 }
 html,
 body {
@@ -576,5 +580,87 @@ a {
   }
   .pg-brand {
     gap: 16px;
+  }
+}
+
+/* ---- Paper and olive skin for the playground ---- */
+.pg .card {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r-l);
+  box-shadow:
+    0 1px 0 rgba(38, 35, 30, 0.04),
+    0 22px 44px -28px rgba(38, 35, 30, 0.28);
+}
+.pg .hero {
+  background: var(--hero-bg);
+  border-radius: var(--r-xl);
+}
+.pg .hero .say {
+  font: 400 clamp(28px, 3vw, 42px) / 1.22 var(--font-serif);
+  letter-spacing: -0.01em;
+}
+.pg .hl {
+  font-weight: 500;
+}
+.pg .lab {
+  font: 500 11px / 1.4 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+.pg .stat {
+  font: 400 clamp(32px, 3vw, 46px) / 1 var(--font-serif);
+  letter-spacing: -0.01em;
+}
+.pg .tile:nth-child(1) {
+  background: var(--hi-t);
+}
+.pg .tile:nth-child(2) {
+  background: var(--en-t);
+}
+.pg .btn-primary,
+.pg .nav-link.on {
+  background: var(--olive);
+  color: #f6f3e9;
+}
+.pg .btn-primary:hover {
+  background: var(--olive-2);
+}
+.pg .btn-inverse {
+  background: var(--hero-ink);
+  color: #1c1a17;
+}
+.pg .round-btn {
+  background: var(--olive);
+  color: #f6f3e9;
+}
+.pg .seg button.on {
+  background: var(--olive);
+  color: #f6f3e9;
+  border-color: var(--olive);
+}
+.pg .hero,
+.pg .card {
+  animation: pg-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.pg .ribbon-scroll g {
+  animation: pg-pop 0.45s ease both;
+}
+@keyframes pg-in {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+}
+@keyframes pg-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg .hero,
+  .pg .card,
+  .pg .ribbon-scroll g {
+    animation: none;
   }
 }
