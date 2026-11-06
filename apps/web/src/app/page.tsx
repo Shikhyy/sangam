@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Footer } from "../components/Footer";
 import { GradientField } from "../components/GradientField";
 import { Instrument } from "../components/Instrument";
 import { Nav } from "../components/Nav";
@@ -300,26 +301,16 @@ export default function Home() {
             <div className="vs-cta" style={{ opacity: 1, animation: "none" }}>
               <Link href="/playground" className="btn btn-primary btn-lg">
                 Try the playground
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
               </Link>
             </div>
           </Reveal>
         </div>
-        <span className="vs-big" aria-hidden="true">
-          <em>संगम</em>
-        </span>
       </section>
 
-      <footer className="vs-foot">
-        <p>
-          Sangam is a project for the Great Indian AI Internship Challenge, built on Gnani's Prisma and Timbre speech
-          APIs. Audio is processed to make your profile and isn't stored.
-        </p>
-        <nav aria-label="Footer">
-          <a href="#developers">Docs</a>
-          <a href="#results">Results</a>
-          <a href="https://github.com/Shikhyy/sangam">Source</a>
-        </nav>
-      </footer>
+      <Footer />
     </main>
   );
 }

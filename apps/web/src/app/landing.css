@@ -600,42 +600,6 @@
   padding: 40px 0 0;
   overflow: hidden;
 }
-.vs-big {
-  display: block;
-  margin-top: 40px;
-  font: 400 clamp(120px, 26vw, 380px) / 0.85 var(--font-serif);
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  user-select: none;
-}
-.vs-big em {
-  font-style: italic;
-}
-.vs-foot {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 28px 32px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  border-top: 1px solid var(--line);
-}
-.vs-foot p {
-  margin: 0;
-  max-width: 580px;
-  font: 400 13px / 1.55 var(--font-ui);
-  color: var(--ink-2);
-}
-.vs-foot nav {
-  display: flex;
-  gap: 24px;
-}
-.vs-foot a {
-  font: 500 14px / 1 var(--font-ui);
-  color: var(--ink-2);
-}
 
 /* ---- Reveal on scroll ---- */
 .rv {
