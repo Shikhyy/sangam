@@ -8,10 +8,12 @@ export interface MockScript {
 
 /**
  * Ordered from most English to most Hindi. The first script whose `maxHindiShare`
- * is at least the target wins. Roughly 9%, 63% and 75% Hindi by the core tagger
- * (checked by a test, so edits here cannot drift out of range unnoticed).
+ * is at least the target wins. About 0%, 9%, 63% and 75% Hindi by the core tagger
+ * (checked by a test, so edits here cannot drift out of range unnoticed). The first
+ * script is pure English, for the "typical agent" baseline.
  */
 export const DEFAULT_MOCK_SCRIPTS: readonly MockScript[] = [
+  { maxHindiShare: 0.05, text: "Your payment is due tomorrow. Please remit it today." },
   { maxHindiShare: 0.3, text: "Your payment is due tomorrow, please pay it today ji." },
   { maxHindiShare: 0.7, text: "Aapka payment due hai, please aaj hi kar dijiye." },
   { maxHindiShare: 1, text: "Aapka payment kal due hai. Aaj hi kar dijiye." },
