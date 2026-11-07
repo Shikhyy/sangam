@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FREE_MODELS, isFreeModel, OpenRouterProvider, textOfLine } from "./openrouter";
+import { FREE_MODELS, isFreeModel, isLeakedReasoning, OpenRouterProvider, textOfLine } from "./openrouter";
 import { LlmUnavailableError } from "./types";
 
 const encoder = new TextEncoder();
@@ -138,17 +138,36 @@ describe("OpenRouterProvider", () => {
   });
 
   it("does not switch models once text has been sent", async () => {
+    // Long enough to pass the opening check, so the person has already seen it.
+    const opening =
+      "Aapka payment kal due hai, please aaj hi kar dijiye, aur agar koi sawaal ho to mujhe zaroor bataiye. ";
     let calls = 0;
     const provider = new OpenRouterProvider({
       apiKey: "k",
       models: ["a/one:free", "b/two:free"],
       fetch: async () => {
         calls += 1;
-        return sse([chunk("Aapka "), `data: ${JSON.stringify({ error: { message: "cut off" } })}`]);
+        return sse([chunk(opening), `data: ${JSON.stringify({ error: { message: "cut off" } })}`]);
       },
     });
     await expect(collect(provider.reply(request))).rejects.toThrow("cut off");
     expect(calls).toBe(1);
+  });
+
+  it("tries the next model when one fails before any text reaches the person", async () => {
+    let calls = 0;
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a/one:free", "b/two:free"],
+      fetch: async () => {
+        calls += 1;
+        return calls === 1
+          ? sse([chunk("Aapka "), `data: ${JSON.stringify({ error: { message: "cut off" } })}`])
+          : sse([chunk("Aapka payment kal due hai."), "data: [DONE]"]);
+      },
+    });
+    expect(await collect(provider.reply(request))).toBe("Aapka payment kal due hai.");
+    expect(calls).toBe(2);
   });
 
   it("rejects a history that does not end with the user", async () => {
@@ -172,5 +191,59 @@ describe("OpenRouterProvider", () => {
       },
     });
     expect(await collect(provider.reply(request))).toBe("made it");
+  });
+
+  it("moves on to the next model when one writes its reasoning instead of a reply", async () => {
+    const leaked =
+      "1. **Analyze the Request:** * **Role:** Polite payment-reminder assistant. * **Format:** Plain spoken";
+    const calls: string[] = [];
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a:free", "b:free"],
+      fetch: async (_url, init) => {
+        const model = JSON.parse(String(init.body)).model as string;
+        calls.push(model);
+        return model === "a:free"
+          ? sse([chunk(leaked.slice(0, 40)), chunk(leaked.slice(40)), "data: [DONE]"])
+          : sse([chunk("Aapka payment kal due hai, "), chunk("please aaj hi kar dijiye."), "data: [DONE]"]);
+      },
+    });
+
+    expect(await collect(provider.reply(request))).toBe("Aapka payment kal due hai, please aaj hi kar dijiye.");
+    expect(calls).toEqual(["a:free", "b:free"]);
+  });
+
+  it("fails clearly when every model leaks its reasoning", async () => {
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a:free"],
+      fetch: async () =>
+        sse([chunk("1. **Analyze the Request:** the user wants to know when the payment is due and"), "data: [DONE]"]),
+    });
+    await expect(collect(provider.reply(request))).rejects.toThrow("reasoning");
+  });
+
+  it("passes a short real reply that ends before the check length", async () => {
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a:free"],
+      fetch: async () => sse([chunk("Theek hai, "), chunk("kal milte hain."), "data: [DONE]"]),
+    });
+    expect(await collect(provider.reply(request))).toBe("Theek hai, kal milte hain.");
+  });
+});
+
+describe("isLeakedReasoning", () => {
+  it("flags reasoning, markdown and list starts", () => {
+    expect(isLeakedReasoning("1. **Analyze the Request:** * **Role:** assistant")).toBe(true);
+    expect(isLeakedReasoning("Thinking Process: first I should look at the user")).toBe(true);
+    expect(isLeakedReasoning("* Aapka payment due hai")).toBe(true);
+    expect(isLeakedReasoning("Aapka **payment** kal due hai")).toBe(true);
+  });
+
+  it("lets plain Hinglish and English through", () => {
+    expect(isLeakedReasoning("Aapka payment kal due hai, please aaj hi kar dijiye.")).toBe(false);
+    expect(isLeakedReasoning("Sure, your payment is due on Friday. I can help you pay it now.")).toBe(false);
+    expect(isLeakedReasoning("आपका payment कल due है।")).toBe(false);
   });
 });

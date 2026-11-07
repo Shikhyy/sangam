@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { buildProfile, check, guide, tag } from "@sangam/core";
-import { createProvider, LlmUnavailableError, monolingualGuidance, PERSONAS } from "@sangam/llm";
+import { createProvider, isLeakedReasoning, LlmUnavailableError, monolingualGuidance, PERSONAS } from "@sangam/llm";
 
 /**
  * E3, mirror fidelity: how close is an agent's mix to the user's mix?
@@ -84,8 +84,8 @@ async function ask(provider: ReturnType<typeof createProvider>, guidance: string
       })) {
         reply += chunk;
       }
-      if (reply.trim()) return reply.trim();
-      throw new LlmUnavailableError("empty reply");
+      if (reply.trim() && !isLeakedReasoning(reply)) return reply.trim();
+      throw new LlmUnavailableError(reply.trim() ? "the model wrote its reasoning, not a reply" : "empty reply");
     } catch (error) {
       if (!(error instanceof LlmUnavailableError) || attempt >= 4) throw error;
       await sleep(attempt * 6000);
@@ -135,6 +135,8 @@ async function main() {
       for (const condition of CONDITIONS) {
         const key = `${speaker.name}|${text}|${condition}`;
         let reply = cache[key];
+        // Anything saved earlier that is really leaked reasoning is thrown away and asked again.
+        if (reply !== undefined && isLeakedReasoning(reply)) reply = undefined;
         if (reply === undefined) {
           try {
             reply = await ask(provider, guidanceFor[condition], text);
