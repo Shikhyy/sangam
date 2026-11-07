@@ -5,8 +5,8 @@ import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } fro
 import { earlierUserTokens, type Turn } from "../lib/history";
 import { requestReply } from "../lib/reply-client";
 import { buildSnippet } from "../lib/snippet";
-import { type RecognitionLike, recognitionCtor } from "../lib/speech";
 import { summarize } from "../lib/summary";
+import { useVoice } from "../lib/use-voice";
 import { type FieldControl, GradientField } from "./GradientField";
 import { Nav } from "./Nav";
 import { Ribbon } from "./Ribbon";
@@ -128,10 +128,6 @@ export function Playground() {
   const [maxSentences, setMaxSentences] = useState(2);
   const [replies, setReplies] = useState<Replies>(IDLE);
   const [notice, setNotice] = useState<string | null>(null);
-  const [listening, setListening] = useState(false);
-  const recognition = useRef<RecognitionLike | null>(null);
-
-  useEffect(() => () => recognition.current?.stop(), []);
 
   const tokens = useMemo(() => tag(text), [text]);
   const metrics = useMemo(() => mixMetrics(tokens), [tokens]);
@@ -150,6 +146,10 @@ export function Playground() {
   );
   const summary = useMemo(() => summarize(metrics, profile.styleType), [metrics, profile.styleType]);
   const field = useRef<FieldControl>({ share: 0.5, tangle: 0.3, level: 0 });
+  const onLevel = useCallback((level: number) => {
+    field.current.level = Math.max(field.current.level * 0.6, level);
+  }, []);
+  const { listening, transcribing, toggleMic, play } = useVoice({ onText: setText, onNotice: setNotice, onLevel });
 
   useEffect(() => {
     field.current.share = metrics.n > 0 ? metrics.hindiShare : 0.5;
@@ -216,43 +216,6 @@ export function Playground() {
       }));
     }
   }, [text, replies.status, history, guidance, profile]);
-
-  const toggleMic = () => {
-    if (listening) {
-      recognition.current?.stop();
-      return;
-    }
-    const Ctor = recognitionCtor();
-    if (!Ctor) {
-      setNotice("Speech input isn't supported in this browser. Type instead.");
-      return;
-    }
-    const session = new Ctor();
-    session.lang = "hi-IN";
-    session.interimResults = true;
-    session.continuous = false;
-    session.onresult = (event) => {
-      const heard = Array.from(event.results, (result) => result[0]?.transcript ?? "").join(" ");
-      setText(heard.trim());
-    };
-    session.onerror = () => setNotice("The microphone is blocked. Allow it in your browser settings, or type instead.");
-    session.onend = () => setListening(false);
-    recognition.current = session;
-    setNotice(null);
-    setListening(true);
-    session.start();
-  };
-
-  const play = (reply: string) => {
-    if (!("speechSynthesis" in window)) {
-      setNotice("Speech output isn't supported in this browser.");
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(reply);
-    utterance.lang = "hi-IN";
-    window.speechSynthesis.speak(utterance);
-  };
 
   const copyCode = () => {
     navigator.clipboard.writeText(snippet).then(
@@ -331,6 +294,7 @@ export function Playground() {
                 type="button"
                 className="btn btn-secondary btn-icon pg-mic"
                 aria-pressed={listening}
+                disabled={transcribing}
                 aria-label={listening ? "Stop listening" : "Speak"}
                 onClick={toggleMic}
               >

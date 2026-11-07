@@ -4,8 +4,8 @@ import { buildProfile, check, guide, mixMetrics, tag } from "@sangam/core";
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { earlierUserTokens, type Turn } from "../lib/history";
 import { requestReply } from "../lib/reply-client";
-import { type RecognitionLike, recognitionCtor } from "../lib/speech";
 import { useCount } from "../lib/use-count";
+import { useVoice } from "../lib/use-voice";
 import { type FieldControl, GradientField } from "./GradientField";
 import { Ribbon } from "./Ribbon";
 
@@ -44,12 +44,12 @@ export function Instrument({ children }: { children?: ReactNode }) {
   const [text, setText] = useState(START);
   const [history, setHistory] = useState<Turn[]>([]);
   const [replies, setReplies] = useState<Replies>(IDLE);
-  const [listening, setListening] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const control = useRef<FieldControl>({ share: 0.5, tangle: 0.3, level: 0 });
-  const recognition = useRef<RecognitionLike | null>(null);
-
-  useEffect(() => () => recognition.current?.stop(), []);
+  const onLevel = useCallback((level: number) => {
+    control.current.level = Math.max(control.current.level * 0.6, level);
+  }, []);
+  const { listening, transcribing, toggleMic, play } = useVoice({ onText: setText, onNotice: setNotice, onLevel });
 
   const tokens = useMemo(() => tag(text), [text]);
   const metrics = useMemo(() => mixMetrics(tokens), [tokens]);
@@ -133,43 +133,6 @@ export function Instrument({ children }: { children?: ReactNode }) {
     }
   }, [text, replies.status, history, guidance, profile]);
 
-  const toggleMic = () => {
-    if (listening) {
-      recognition.current?.stop();
-      return;
-    }
-    const Ctor = recognitionCtor();
-    if (!Ctor) {
-      setNotice("Speech input isn't supported in this browser. Type instead.");
-      return;
-    }
-    const session = new Ctor();
-    session.lang = "hi-IN";
-    session.interimResults = true;
-    session.continuous = false;
-    session.onresult = (event) => {
-      const heard = Array.from(event.results, (result) => result[0]?.transcript ?? "").join(" ");
-      setText(heard.trim());
-    };
-    session.onerror = () => setNotice("The microphone is blocked. Allow it in your browser settings, or type instead.");
-    session.onend = () => setListening(false);
-    recognition.current = session;
-    setNotice(null);
-    setListening(true);
-    session.start();
-  };
-
-  const play = (reply: string) => {
-    if (!("speechSynthesis" in window)) {
-      setNotice("Speech output isn't supported in this browser.");
-      return;
-    }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(reply);
-    utterance.lang = "hi-IN";
-    window.speechSynthesis.speak(utterance);
-  };
-
   const rows = [
     { key: "typical", name: "Typical agent", reply: replies.typical },
     { key: "sangam", name: "Sangam", reply: replies.sangam },
@@ -186,7 +149,7 @@ export function Instrument({ children }: { children?: ReactNode }) {
             Say it the way you say it
           </label>
           <span className="pc-live">
-            <i /> Live
+            <i /> {listening ? "Listening" : transcribing ? "Hearing you" : "Live"}
           </span>
         </div>
 
@@ -207,6 +170,7 @@ export function Instrument({ children }: { children?: ReactNode }) {
             className={listening ? "btn btn-secondary btn-icon pc-mic on" : "btn btn-secondary btn-icon pc-mic"}
             onClick={toggleMic}
             aria-pressed={listening}
+            disabled={transcribing}
             aria-label={listening ? "Stop listening" : "Speak instead of typing"}
           >
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" style={stroke}>
