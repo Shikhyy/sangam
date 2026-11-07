@@ -16,7 +16,7 @@ describe("createProvider", () => {
   });
 
   it("requires a key in live mode", () => {
-    expect(() => createProvider({ SANGAM_MODE: "live" })).toThrow("ANTHROPIC_API_KEY");
+    expect(() => createProvider({ SANGAM_MODE: "live" })).toThrow("OPENROUTER_API_KEY");
   });
 
   it("builds the Claude provider in live mode", () => {
@@ -28,5 +28,24 @@ describe("createProvider", () => {
     const live = { SANGAM_MODE: "live", ANTHROPIC_API_KEY: "sk-test" };
     expect(createProvider({ ...live, SANGAM_LLM_EFFORT: "high" }).name).toBe("anthropic");
     expect(() => createProvider({ ...live, SANGAM_LLM_EFFORT: "turbo" })).toThrow("SANGAM_LLM_EFFORT");
+  });
+
+  it("prefers OpenRouter in live mode when its key is set", () => {
+    expect(createProvider({ SANGAM_MODE: "live", OPENROUTER_API_KEY: "sk-or-test" }).name).toBe("openrouter");
+    expect(
+      createProvider({ SANGAM_MODE: "live", OPENROUTER_API_KEY: "sk-or-test", ANTHROPIC_API_KEY: "sk-test" }).name,
+    ).toBe("openrouter");
+  });
+
+  it("accepts a list of free OpenRouter models", () => {
+    const env = { SANGAM_MODE: "live", OPENROUTER_API_KEY: "sk-or-test" };
+    expect(createProvider({ ...env, OPENROUTER_MODEL: "google/gemma-4-31b-it:free, openrouter/free" }).name).toBe(
+      "openrouter",
+    );
+  });
+
+  it("refuses a model that is not free", () => {
+    const env = { SANGAM_MODE: "live", OPENROUTER_API_KEY: "sk-or-test" };
+    expect(() => createProvider({ ...env, OPENROUTER_MODEL: "anthropic/claude-opus-5.5" })).toThrow("free");
   });
 });
