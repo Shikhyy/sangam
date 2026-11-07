@@ -17,6 +17,10 @@ export interface Limits {
     /** Speech requests one visitor may make per minute. */
     callerPerMinute: number;
   };
+  api: {
+    /** Public API requests one key (or one visitor without a key) may make per minute. */
+    perMinute: number;
+  };
   reply: {
     /** Reply requests one visitor may make per minute. Each "Get replies" makes two. */
     callerPerMinute: number;
@@ -29,6 +33,7 @@ export interface Limits {
 
 export const DEFAULT_LIMITS: Limits = {
   speech: { dailySeconds: 900, callerSeconds: 120, callerPerMinute: 20 },
+  api: { perMinute: 60 },
   // OpenRouter's free models allow about 20 requests a minute and 50 a day without credits.
   reply: { callerPerMinute: 12, globalPerMinute: 18, dailyRequests: 45 },
 };
@@ -48,6 +53,7 @@ export function readLimits(env: Readonly<Record<string, string | undefined>>): L
       callerSeconds: numberFrom(env.SANGAM_SESSION_SPEECH_CAP_SEC, DEFAULT_LIMITS.speech.callerSeconds),
       callerPerMinute: numberFrom(env.SANGAM_SPEECH_PER_MIN, DEFAULT_LIMITS.speech.callerPerMinute),
     },
+    api: { perMinute: numberFrom(env.SANGAM_API_PER_MIN, DEFAULT_LIMITS.api.perMinute) },
     reply: {
       callerPerMinute: numberFrom(env.SANGAM_REPLY_PER_MIN, DEFAULT_LIMITS.reply.callerPerMinute),
       globalPerMinute: numberFrom(env.SANGAM_REPLY_GLOBAL_PER_MIN, DEFAULT_LIMITS.reply.globalPerMinute),
@@ -205,6 +211,7 @@ export function createGuards(limits: Limits, now: () => number = Date.now) {
       budget: createSpeechBudget(limits.speech.dailySeconds, limits.speech.callerSeconds, now),
       perMinute: createRateLimiter(limits.speech.callerPerMinute, 60_000),
     },
+    api: createRateLimiter(limits.api.perMinute, 60_000),
     reply: createReplyGuard(limits.reply, now),
   };
 }
