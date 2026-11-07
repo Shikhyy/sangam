@@ -1,3 +1,4 @@
+import { PUBLISHED } from "@sangam/eval/published";
 import Link from "next/link";
 import { Footer } from "../components/Footer";
 import { GradientField } from "../components/GradientField";
@@ -65,9 +66,9 @@ const RESULTS = [
     note: "Typical agent against Sangam, in points of Hindi share. The live-model run is unfinished.",
   },
   {
-    label: "Time to first sound",
-    value: "Not yet",
-    note: "Median and slowest 5 percent, on the hosted setup. Not measured.",
+    label: "Speech ready in",
+    value: `${(PUBLISHED.speech.textToAudioMedianMs / 1000).toFixed(2)} s`,
+    note: `Median for a Gnani Timbre voice to turn a sentence into audio, over ${PUBLISHED.speech.clips} synthetic clips from a laptop.`,
   },
 ];
 

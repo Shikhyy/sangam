@@ -8,6 +8,7 @@ const PRODUCT = [
   { label: "How it works", href: "/#how" },
   { label: "Playground", href: "/playground" },
   { label: "Docs", href: "/docs" },
+  { label: "Results", href: "/results" },
   { label: "Share your mix", href: "/card" },
 ];
 

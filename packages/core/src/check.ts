@@ -26,10 +26,24 @@ export interface CheckResult {
   /** False when the reply was too short to judge; such replies always pass. */
   judged: boolean;
   pass: boolean;
+  /**
+   * What to tell the model when the draft missed: which way it drifted and how to fix it. Null when the
+   * draft passed or was too short to judge. Add it to the next prompt to ask for a closer rewrite.
+   */
+  advice: string | null;
 }
 
 /** The CMI implied by a Hindi share (used to compare a reply with a target). */
 const cmiOfShare = (hindiShare: number) => 100 * (1 - Math.max(hindiShare, 1 - hindiShare));
+
+function adviceFor(replyShare: number, target: Target): string {
+  const had = Math.round(replyShare * 100);
+  const want = Math.round(target.hindiShare * 100);
+  const lead = `That draft is ${had}% Hindi, but this speaker is about ${want}% Hindi.`;
+  return replyShare > target.hindiShare
+    ? `${lead} Rewrite it with more English: keep Hindi for the small connecting words and use the English nouns and verbs the speaker uses. Keep the same meaning.`
+    : `${lead} Rewrite it with more Hindi: put Hindi small words and verbs (like hai, kal, nahi, kar) around the English nouns. Keep the same meaning.`;
+}
 
 /**
  * Score a draft reply against the mix it should have.
@@ -42,12 +56,15 @@ export function check(reply: string, target: Target, options: CheckOptions = {})
   const judged = replyProfile.tokenCount >= minTokens;
   const deltaHindiShare = Math.abs(replyProfile.hindiShare - target.hindiShare);
 
+  const pass = !judged || deltaHindiShare <= tolerance + EPSILON;
+
   return {
     replyProfile,
     deltaHindiShare,
     deltaCmi: Math.abs(replyProfile.cmi - cmiOfShare(target.hindiShare)),
     deltaSwitchRate: Math.abs(replyProfile.switchRate - target.switchRate),
     judged,
-    pass: !judged || deltaHindiShare <= tolerance + EPSILON,
+    pass,
+    advice: pass ? null : adviceFor(replyProfile.hindiShare, target),
   };
 }

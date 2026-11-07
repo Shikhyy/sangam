@@ -582,7 +582,7 @@
 .vs-res b {
   display: block;
   font: 400 clamp(44px, 5vw, 68px) / 1 var(--font-serif);
-  color: #b9b39f;
+  color: var(--ink);
 }
 .vs .vs-res h3 {
   margin: 18px 0 6px;

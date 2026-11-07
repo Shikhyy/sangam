@@ -6,7 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   // The workspace packages ship TypeScript source.
-  transpilePackages: ["@sangam/core", "@sangam/llm", "@sangam/speech"],
+  transpilePackages: ["@sangam/core", "@sangam/eval", "@sangam/llm", "@sangam/speech"],
   async headers() {
     return [
       {

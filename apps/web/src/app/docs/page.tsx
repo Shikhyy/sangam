@@ -89,7 +89,8 @@ const CHECK_RESPONSE = `{
   "deltaCmi": 12.5,
   "deltaSwitchRate": 0.37,
   "judged": true,
-  "pass": true
+  "pass": true,
+  "advice": null
 }`;
 
 const ERRORS = [
@@ -191,7 +192,9 @@ export default function DocsPage() {
             <p>
               Score a draft reply against the target. <code>deltaHindiShare</code> is the gap in Hindi share, as a
               fraction. <code>pass</code> is true when it is within 0.15. Replies with fewer than 4 Hindi or English
-              words are too short to judge, so they return <code>judged: false</code> and pass.
+              words are too short to judge, so they return <code>judged: false</code> and pass. When a draft fails,{" "}
+              <code>advice</code> says which way it drifted and how to fix it. Add it to your next prompt to ask for a
+              closer rewrite.
             </p>
             <Code>{CHECK_REQUEST}</Code>
             <Code>{CHECK_RESPONSE}</Code>
