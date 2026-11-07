@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Evaluation harness for Sangam: tagger accuracy, ablations and annotator agreement.",
+  "description": "Evaluation harness for Sangam: tagger accuracy, ablations, annotator agreement and mirror fidelity.",
   "dependencies": {
-    "@sangam/core": "workspace:*"
+    "@sangam/core": "workspace:*",
+    "@sangam/llm": "workspace:*"
   }
 }

@@ -2,7 +2,7 @@
 # by meaning, without looking at the tagger's output. Never tuned on.
 mujhe=H laga=H tha=H ki=H train=E time=E par=H aayegi=H
 kal=H subah=H gym=E jaana=H hai=H kya=H
-bhaiya=H ek=H extra=E chai=E dena=H please=E
+bhaiya=H ek=H extra=E chai=H dena=H please=E
 ye=H laptop=E bahut=H heavy=E hai=H
 wifi=E password=E kya=H hai=H yahan=H ka=H
 mere=H phone=E ki=H battery=E jaldi=H khatam=H ho=H jaati=H hai=H
