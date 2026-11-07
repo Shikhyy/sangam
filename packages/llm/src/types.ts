@@ -43,3 +43,15 @@ export class LlmRefusalError extends Error {
     this.category = category;
   }
 }
+
+/** The provider could not be reached or turned the request down (bad key, rate limit, outage). */
+export class LlmUnavailableError extends Error {
+  /** The HTTP status when there was one. */
+  readonly status: number | null;
+
+  constructor(message: string, status: number | null = null) {
+    super(message);
+    this.name = "LlmUnavailableError";
+    this.status = status;
+  }
+}

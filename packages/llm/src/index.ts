@@ -9,11 +9,28 @@ export {
 } from "./anthropic";
 export { createProvider } from "./factory";
 export { DEFAULT_MOCK_SCRIPTS, MockProvider, type MockProviderOptions, type MockScript } from "./mock";
-export { buildSystemPrompt, DEFAULT_PERSONA, monolingualGuidance, validateHistory } from "./prompt";
+export {
+  FREE_MODELS,
+  isFreeModel,
+  OPENROUTER_URL,
+  OpenRouterProvider,
+  type OpenRouterProviderOptions,
+} from "./openrouter";
+export {
+  buildSystemPrompt,
+  DEFAULT_PERSONA,
+  isPersonaKey,
+  monolingualGuidance,
+  PERSONA_KEYS,
+  PERSONAS,
+  type PersonaKey,
+  validateHistory,
+} from "./prompt";
 export {
   type ChatTurn,
   type LlmProvider,
   LlmRefusalError,
   LlmRequestError,
+  LlmUnavailableError,
   type ReplyRequest,
 } from "./types";

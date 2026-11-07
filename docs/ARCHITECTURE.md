@@ -223,3 +223,22 @@ SANGAM_SESSION_SPEECH_CAP_SEC=
 - Web: Vercel (or any static plus serverless host).
 - Realtime: a small Node host (Fly.io, Render or similar). Free tiers may sleep, so show a short "waking up" state and test it before the video.
 - For the video, run locally if hosting is flaky. The public link must still work by submission.
+
+## Limits and spend guards
+
+The app is meant to run on free tiers and a small speech budget, so every route that costs something is guarded. Counters are in memory for one server process: a safety net, not billing. All settings are optional environment variables (see `.env.example`); blank uses the default, and `0` blocks that thing.
+
+| Guard                                  | Default                             | Why                                                                                     |
+| -------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------- |
+| Speech seconds per day, whole site     | 900                                 | Gnani charges by the second. Set before the work, settled with the length of the audio. |
+| Speech seconds per visitor per hour    | 120                                 | One visitor cannot use the day's budget.                                                |
+| Speech requests per visitor per minute | 20                                  | Stops a loop.                                                                           |
+| Reply requests per visitor per minute  | 12                                  | Each "Get replies" makes two.                                                           |
+| Reply requests per minute, whole site  | 18                                  | OpenRouter's free models allow about 20 a minute.                                       |
+| Reply requests per day, whole site     | 45                                  | Under the free quota of about 50 a day without credits.                                 |
+| Recording length                       | 3 MB (about 30 s)                   | Gnani's REST limit.                                                                     |
+| Text to speak                          | 500 characters                      | Keeps one play cheap.                                                                   |
+| One request to Gnani at a time         | always                              | The account may allow only one active request.                                          |
+| Timeouts                               | 20 s Gnani, 30 s per language model | A hung call cannot block the queue.                                                     |
+
+A refused request gets HTTP 429, a `Retry-After` header and a plain message that the page shows. The mock provider is not counted, because it costs nothing. Only free OpenRouter models can be configured. The speech guards reset at midnight UTC.

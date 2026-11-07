@@ -20,24 +20,26 @@ describe("MockProvider", () => {
   });
 
   it("picks the script for the target Hindi share", async () => {
-    expect(await textFor(0.1)).toBe(DEFAULT_MOCK_SCRIPTS[0]?.text);
-    expect(await textFor(0.5)).toBe(DEFAULT_MOCK_SCRIPTS[1]?.text);
-    expect(await textFor(0.9)).toBe(DEFAULT_MOCK_SCRIPTS[2]?.text);
+    expect(await textFor(0)).toBe(DEFAULT_MOCK_SCRIPTS[0]?.text);
+    expect(await textFor(0.1)).toBe(DEFAULT_MOCK_SCRIPTS[1]?.text);
+    expect(await textFor(0.5)).toBe(DEFAULT_MOCK_SCRIPTS[2]?.text);
+    expect(await textFor(0.9)).toBe(DEFAULT_MOCK_SCRIPTS[3]?.text);
   });
 
   it("uses the middle script when no target is given", async () => {
-    expect(await textFor(undefined)).toBe(DEFAULT_MOCK_SCRIPTS[1]?.text);
+    expect(await textFor(undefined)).toBe(DEFAULT_MOCK_SCRIPTS[2]?.text);
   });
 
   it("includes the boundary in the lower script", async () => {
-    expect(await textFor(0.3)).toBe(DEFAULT_MOCK_SCRIPTS[0]?.text);
-    expect(await textFor(0.7)).toBe(DEFAULT_MOCK_SCRIPTS[1]?.text);
+    expect(await textFor(0.05)).toBe(DEFAULT_MOCK_SCRIPTS[0]?.text);
+    expect(await textFor(0.3)).toBe(DEFAULT_MOCK_SCRIPTS[1]?.text);
+    expect(await textFor(0.7)).toBe(DEFAULT_MOCK_SCRIPTS[2]?.text);
   });
 
   it("streams word by word", async () => {
     const chunks = await collect(new MockProvider().reply({ history, targetHindiShare: 0.5 }));
     expect(chunks.length).toBeGreaterThan(3);
-    expect(chunks.join("")).toBe(DEFAULT_MOCK_SCRIPTS[1]?.text);
+    expect(chunks.join("")).toBe(DEFAULT_MOCK_SCRIPTS[2]?.text);
     expect(chunks.at(-1)?.endsWith(" ")).toBe(false);
   });
 
@@ -63,7 +65,7 @@ describe("MockProvider", () => {
 
 describe("DEFAULT_MOCK_SCRIPTS", () => {
   it("really have the Hindi share they are filed under", () => {
-    let previousMax = 0;
+    let previousMax = -1;
     for (const script of DEFAULT_MOCK_SCRIPTS) {
       const { hindiShare } = mixMetrics(tag(script.text));
       expect(hindiShare).toBeLessThanOrEqual(script.maxHindiShare);

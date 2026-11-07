@@ -1,0 +1,24 @@
+{
+  "name": "@sangam/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The Sangam web app: playground, card and docs.",
+  "scripts": {
+    "dev": "node ./scripts/next.mjs dev",
+    "build": "node ./scripts/next.mjs build",
+    "start": "node ./scripts/next.mjs start"
+  },
+  "dependencies": {
+    "@sangam/core": "workspace:*",
+    "@sangam/llm": "workspace:*",
+    "@sangam/speech": "workspace:*",
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0"
+  }
+}

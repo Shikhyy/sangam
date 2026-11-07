@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { buildSystemPrompt, DEFAULT_PERSONA, monolingualGuidance, validateHistory } from "./prompt";
+import {
+  buildSystemPrompt,
+  DEFAULT_PERSONA,
+  isPersonaKey,
+  monolingualGuidance,
+  PERSONA_KEYS,
+  PERSONAS,
+  validateHistory,
+} from "./prompt";
 import { LlmRequestError } from "./types";
 
 describe("buildSystemPrompt", () => {
@@ -64,5 +72,25 @@ describe("monolingualGuidance", () => {
   it("asks for Hindi or English only", () => {
     expect(monolingualGuidance("hindi")).toContain("formal, standard Hindi");
     expect(monolingualGuidance("english")).toContain("entirely in English");
+  });
+});
+
+describe("personas", () => {
+  it("offers the four agents, and payments is the default persona", () => {
+    expect(PERSONA_KEYS).toEqual(["payments", "support", "sales", "appointments"]);
+    expect(PERSONAS.payments.prompt).toBe(DEFAULT_PERSONA);
+  });
+
+  it("puts the chosen agent in the system prompt", () => {
+    const prompt = buildSystemPrompt({ persona: PERSONAS.appointments.prompt });
+    expect(prompt).toContain("appointment assistant");
+    expect(prompt).not.toContain("payment-reminder");
+  });
+
+  it("recognises keys and nothing inherited from objects", () => {
+    expect(isPersonaKey("sales")).toBe(true);
+    for (const value of ["toString", "__proto__", "constructor", "nope", 1, undefined]) {
+      expect(isPersonaKey(value)).toBe(false);
+    }
   });
 });
