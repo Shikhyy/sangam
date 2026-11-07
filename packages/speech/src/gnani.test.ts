@@ -185,3 +185,40 @@ describe("createSpeech", () => {
     expect(createSpeech({ GNANI_API_KEY: "k" })?.name).toBe("gnani");
   });
 });
+
+describe("timeouts", () => {
+  it("gives up on a request that never answers and reports it as retryable", async () => {
+    const speech = new GnaniSpeech({
+      apiKey: "k",
+      timeoutMs: 20,
+      fetch: (_url, init) =>
+        new Promise((_resolve, reject) => {
+          init.signal?.addEventListener("abort", () => reject(new Error("aborted")));
+        }),
+    });
+    const error = (await speech.transcribe(clip).catch((e: unknown) => e)) as SpeechError;
+    expect(error).toBeInstanceOf(SpeechError);
+    expect(error.retryable).toBe(true);
+  });
+
+  it("does not let a hung request block the next one", async () => {
+    let calls = 0;
+    const speech = new GnaniSpeech({
+      apiKey: "k",
+      timeoutMs: 20,
+      fetch: (_url, init) => {
+        calls += 1;
+        if (calls === 1) {
+          return new Promise((_resolve, reject) => {
+            init.signal?.addEventListener("abort", () => reject(new Error("aborted")));
+          });
+        }
+        return Promise.resolve(json({ success: true, transcript: "after" }));
+      },
+    });
+    const first = speech.transcribe(clip).catch(() => null);
+    const second = speech.transcribe(clip);
+    await first;
+    expect((await second).text).toBe("after");
+  });
+});

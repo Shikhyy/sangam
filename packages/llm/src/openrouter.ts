@@ -28,6 +28,8 @@ export interface OpenRouterProviderOptions {
   models?: readonly string[];
   /** Replies are short and spoken. Default 300. */
   maxTokens?: number;
+  /** Give up on one model after this long and try the next. Default 30,000. */
+  timeoutMs?: number;
   /** For tests. */
   fetch?: FetchLike;
 }
@@ -66,6 +68,7 @@ export class OpenRouterProvider implements LlmProvider {
   private readonly apiKey: string;
   private readonly models: readonly string[];
   private readonly maxTokens: number;
+  private readonly timeoutMs: number;
   private readonly fetchImpl: FetchLike;
 
   constructor(options: OpenRouterProviderOptions) {
@@ -78,6 +81,7 @@ export class OpenRouterProvider implements LlmProvider {
     this.apiKey = options.apiKey;
     this.models = models;
     this.maxTokens = options.maxTokens ?? 300;
+    this.timeoutMs = options.timeoutMs ?? 30_000;
     this.fetchImpl = options.fetch ?? ((url, init) => fetch(url, init));
   }
 
@@ -100,7 +104,9 @@ export class OpenRouterProvider implements LlmProvider {
             "x-title": "Sangam",
           },
           body: JSON.stringify({ model, messages, stream: true, max_tokens: this.maxTokens }),
-          signal: request.signal,
+          signal: request.signal
+            ? AbortSignal.any([request.signal, AbortSignal.timeout(this.timeoutMs)])
+            : AbortSignal.timeout(this.timeoutMs),
         });
 
         if (!response.ok) {

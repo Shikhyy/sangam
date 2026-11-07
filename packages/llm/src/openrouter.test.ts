@@ -155,4 +155,22 @@ describe("OpenRouterProvider", () => {
     const provider = new OpenRouterProvider({ apiKey: "k", fetch: async () => sse([chunk("x")]) });
     await expect(collect(provider.reply({ history: [] }))).rejects.toThrow();
   });
+
+  it("moves on to the next model when one hangs", async () => {
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a/one:free", "b/two:free"],
+      timeoutMs: 30,
+      fetch: (_url, init) => {
+        const { model } = JSON.parse(String(init.body));
+        if (model === "a/one:free") {
+          return new Promise((_resolve, reject) => {
+            init.signal?.addEventListener("abort", () => reject(new Error("timed out")));
+          });
+        }
+        return Promise.resolve(sse([chunk("made it")]));
+      },
+    });
+    expect(await collect(provider.reply(request))).toBe("made it");
+  });
 });

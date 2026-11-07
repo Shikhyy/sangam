@@ -36,6 +36,8 @@ export interface GnaniOptions {
   fetch?: FetchLike;
   /** Wait before the single retry after a 429, in milliseconds. Default 700. */
   retryDelayMs?: number;
+  /** Give up on one request after this long, so a hung call cannot block the queue. Default 20,000. */
+  timeoutMs?: number;
 }
 
 export interface Transcript {
@@ -94,6 +96,7 @@ export class GnaniSpeech {
   >;
   private readonly fetchImpl: FetchLike;
   private readonly retryDelayMs: number;
+  private readonly timeoutMs: number;
   private tail: Promise<unknown> = Promise.resolve();
 
   constructor(options: GnaniOptions) {
@@ -109,6 +112,7 @@ export class GnaniSpeech {
     };
     this.fetchImpl = options.fetch ?? ((url, init) => fetch(url, init));
     this.retryDelayMs = options.retryDelayMs ?? 700;
+    this.timeoutMs = options.timeoutMs ?? 20_000;
   }
 
   /** Run tasks one after another, whatever happens to the earlier ones. */
@@ -122,7 +126,7 @@ export class GnaniSpeech {
     for (let attempt = 0; ; attempt += 1) {
       let response: Response;
       try {
-        response = await this.fetchImpl(url, init);
+        response = await this.fetchImpl(url, { ...init, signal: AbortSignal.timeout(this.timeoutMs) });
       } catch {
         throw new SpeechError(`Could not reach Gnani ${service}.`, null, true);
       }
