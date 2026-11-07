@@ -170,6 +170,17 @@ describe("OpenRouterProvider", () => {
     expect(calls).toBe(2);
   });
 
+  it("reports a network failure as the service being unavailable", async () => {
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a/one:free"],
+      fetch: async () => {
+        throw new TypeError("fetch failed");
+      },
+    });
+    await expect(collect(provider.reply(request))).rejects.toBeInstanceOf(LlmUnavailableError);
+  });
+
   it("rejects a history that does not end with the user", async () => {
     const provider = new OpenRouterProvider({ apiKey: "k", fetch: async () => sse([chunk("x")]) });
     await expect(collect(provider.reply({ history: [] }))).rejects.toThrow();

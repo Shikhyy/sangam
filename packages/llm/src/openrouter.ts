@@ -201,6 +201,7 @@ export class OpenRouterProvider implements LlmProvider {
         lastError = error instanceof Error ? error : new LlmUnavailableError(String(error));
       }
     }
-    throw lastError;
+    // A network failure or anything else unexpected means the service could not be reached: the busy error.
+    throw lastError instanceof LlmUnavailableError ? lastError : new LlmUnavailableError(lastError.message);
   }
 }
