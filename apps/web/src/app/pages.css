@@ -1,0 +1,428 @@
+/* Shared by the docs, pricing and card pages. Uses the tokens and the vs- styles from globals.css and landing.css. */
+.dc-head {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px 32px 24px;
+}
+.dc-kick {
+  margin: 0 0 18px;
+  font: 500 12px / 1 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.dc-head h1 {
+  margin: 0;
+  font: 400 clamp(44px, 6.4vw, 92px) / 1 var(--font-serif);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.dc-head h1 em {
+  font-style: italic;
+}
+.dc-head > p:last-child {
+  margin: 24px 0 0;
+  max-width: 640px;
+  font: 400 18px / 1.6 var(--font-ui);
+  color: var(--ink-2);
+}
+
+/* ---- Docs ---- */
+.dc-layout {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 32px 0;
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 56px;
+}
+.dc-toc {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dc-toc a {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font: 500 14px / 1.2 var(--font-ui);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.dc-toc a:hover {
+  background: rgba(38, 35, 30, 0.06);
+  color: var(--ink);
+}
+.dc-body section {
+  padding: 44px 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 90px;
+}
+.dc-body h2 {
+  margin: 0 0 14px;
+  font: 400 clamp(30px, 3.4vw, 44px) / 1.1 var(--font-serif);
+  letter-spacing: -0.015em;
+}
+.dc-body p {
+  margin: 0 0 12px;
+  max-width: 720px;
+  font: 400 16px / 1.65 var(--font-ui);
+  color: var(--ink-2);
+}
+.dc-body code {
+  font: 500 0.88em var(--font-mono);
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--sunken);
+  color: var(--ink);
+}
+.dc-method {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  background: var(--olive);
+  color: #f6f3e9;
+  font: 600 0.4em / 1.6 var(--font-ui);
+  vertical-align: middle;
+  letter-spacing: 0.04em;
+}
+.dc-code {
+  margin: 16px 0;
+  padding: 20px 22px;
+  border-radius: 16px;
+  background: #1f1d19;
+  color: #f2efe4;
+  font: 400 13.5px / 1.75 var(--font-mono);
+  overflow-x: auto;
+  white-space: pre;
+}
+.dc-body .dc-code code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+.dc-error {
+  color: #ffb4a0;
+}
+.dc-try {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 720px;
+}
+.dc-try-label {
+  font: 500 12px / 1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.dc-try-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--raised);
+  color: var(--ink);
+  font: 400 28px / 1.2 var(--font-serif);
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.dc-try-input:focus {
+  border-color: var(--olive);
+}
+.dc-try .dc-code {
+  width: 100%;
+  margin: 4px 0 0;
+  min-height: 120px;
+}
+.dc-table {
+  width: 100%;
+  max-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.dc-table td {
+  padding: 14px 18px;
+  vertical-align: top;
+  font: 400 15px / 1.5 var(--font-ui);
+  color: var(--ink-2);
+  border-top: 1px solid var(--line);
+}
+.dc-table tr:first-child td {
+  border-top: 0;
+}
+.dc-table td:first-child {
+  width: 64px;
+}
+.dc-list {
+  margin: 0;
+  padding-left: 20px;
+  max-width: 720px;
+  color: var(--ink-2);
+  font: 400 16px / 1.9 var(--font-ui);
+}
+
+/* ---- Pricing ---- */
+.pr-grid {
+  max-width: 1240px;
+  margin: 24px auto 0;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 20px;
+}
+.pr-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 30px 28px;
+  border-radius: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.pr-card.featured {
+  background: var(--raised);
+  border-color: var(--olive);
+  box-shadow: 0 30px 60px -36px rgba(73, 75, 53, 0.6);
+}
+.pr-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pr-card h2 {
+  margin: 0;
+  font: 400 40px / 1 var(--font-serif);
+}
+.pr-tag {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--sunken);
+  color: var(--ink-2);
+  font: 600 12px / 1.4 var(--font-ui);
+}
+.pr-tag.live {
+  background: var(--ok-t);
+  color: var(--ok);
+}
+.pr-blurb {
+  margin: 0;
+  font: 400 16px / 1.5 var(--font-ui);
+  color: var(--ink-2);
+}
+.pr-price {
+  margin: 4px 0 0;
+  font: 400 52px / 1 var(--font-serif);
+  color: #b9b39f;
+}
+.pr-card ul {
+  margin: 8px 0 16px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.pr-card li {
+  position: relative;
+  padding-left: 26px;
+  font: 400 15px / 1.5 var(--font-ui);
+  color: var(--ink-2);
+}
+.pr-card li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 7px;
+  width: 12px;
+  height: 7px;
+  border-left: 2px solid var(--olive);
+  border-bottom: 2px solid var(--olive);
+  transform: rotate(-45deg);
+}
+.pr-note {
+  max-width: 640px;
+  margin: 40px auto 0;
+  padding: 0 24px;
+  text-align: center;
+  font: 400 15px / 1.6 var(--font-ui);
+  color: var(--ink-2);
+}
+
+/* ---- Share card ---- */
+.ct-frame {
+  min-height: 560px;
+}
+.ct-card {
+  position: relative;
+  width: min(560px, 100%);
+  padding: 32px 34px 28px;
+  border-radius: 24px;
+  background: rgba(252, 251, 246, 0.92);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 50px 90px -34px rgba(38, 35, 30, 0.5);
+}
+.ct-style {
+  margin: 0;
+  font: 500 12px / 1 var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.ct-big {
+  margin: 14px 0 20px;
+  font: 400 clamp(52px, 8vw, 88px) / 1 var(--font-serif);
+  letter-spacing: -0.02em;
+}
+.ct-big .hi,
+.ct-legend .hi {
+  color: var(--hi);
+}
+.ct-legend .en {
+  color: var(--en);
+}
+.ct-bar {
+  display: flex;
+  gap: 4px;
+  height: 18px;
+}
+.ct-bar i {
+  display: block;
+  flex-basis: 0;
+  min-width: 8px;
+  border-radius: 9px;
+}
+.ct-bar .h {
+  background: var(--hi-s);
+}
+.ct-bar .e {
+  background: var(--en-s);
+}
+.ct-legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 22px;
+  font: 400 15px / 1.4 var(--font-ui);
+  color: var(--ink-2);
+}
+.ct-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+.ct-stats > div {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--sunken);
+}
+.ct-stats dt {
+  font: 500 10px / 1.4 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.ct-stats dd {
+  margin: 2px 0 0;
+  font: 400 34px / 1.1 var(--font-serif);
+}
+.ct-brand {
+  margin: 28px 0 0;
+  font: 500 12px / 1.6 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+.ct-empty {
+  margin: 0;
+  padding: 40px 0;
+  text-align: center;
+  font: 400 28px / 1.2 var(--font-serif);
+  color: var(--ink-3);
+}
+.ct-below {
+  max-width: 640px;
+  margin: 32px auto 0;
+}
+.ct-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ct-label {
+  font: 500 12px / 1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.ct-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--raised);
+  color: var(--ink);
+  font: 400 28px / 1.2 var(--font-serif);
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.ct-input:focus {
+  border-color: var(--olive);
+}
+.ct-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ct-note {
+  margin: 0;
+  font: 400 13px / 1.5 var(--font-ui);
+  color: var(--ink-3);
+}
+.ct-cta {
+  margin: 28px 0 0;
+  text-align: center;
+  font: 400 15px / 1.5 var(--font-ui);
+  color: var(--ink-2);
+}
+.ct-cta a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .dc-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .dc-toc {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 640px) {
+  .dc-head,
+  .dc-layout,
+  .pr-grid {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .ct-card {
+    padding: 22px 20px;
+  }
+}

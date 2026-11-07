@@ -1,6 +1,6 @@
 # Sangam API (v0 draft)
 
-All endpoints are JSON over HTTPS, stateless, no data retained. Base path: `/api/v1`. Authentication for v0: none on the demo host, rate-limited. (Keys and accounts are roadmap.)
+All endpoints are JSON over HTTPS, stateless, no data retained. Base path: `/api/v1`. Authentication: a server can run open (the demo host and local use) or with keys switched on by setting `SANGAM_API_KEYS`. With keys on, send one as `Authorization: Bearer <key>` or `X-Sangam-Key`. Hosted keys, plans and accounts are roadmap. Requests are rate-limited per key, or per visitor when open.
 
 Languages in v0: `hi` (Hindi) and `en` (English) only.
 
@@ -149,7 +149,7 @@ Response 200:
 
 ## Rate limits (demo host, subject to change)
 
-60 requests per minute per IP. Realtime sessions capped by seconds of speech (see `ARCHITECTURE.md` section 4).
+60 requests per minute per key, or per IP when the API is open (`SANGAM_API_PER_MIN`). Bodies are limited to 20,000 bytes. Realtime sessions capped by seconds of speech (see `ARCHITECTURE.md` section 4).
 
 ## Realtime WebSocket (internal for v0)
 
