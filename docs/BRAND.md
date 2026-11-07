@@ -15,7 +15,7 @@ Sangam (संगम) means a meeting point, the place where rivers join. That i
 ## Voice and tone
 
 - Plain and specific. Say what it does and show a number.
-- Honest. Say what is planned and what is live. Never show a result we have not measured; placeholders are marked `[ value ]`.
+- Honest. Say what is planned and what is live. Never show a result we have not measured; anything not yet measured says "Not yet".
 - Warm, not cute. It is a tool for people who talk the way they talk.
 - No jargon in the headline. "Code-switching" belongs in the docs, not the hero.
 - Hinglish examples are real sentences people say, written in Roman script unless the point is Devanagari.
