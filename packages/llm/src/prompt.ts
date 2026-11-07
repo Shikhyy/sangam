@@ -3,6 +3,39 @@ import { type ChatTurn, LlmRequestError } from "./types";
 export const DEFAULT_PERSONA =
   "You are a polite payment-reminder assistant for a lending company. You help the customer understand a payment that is due and how to pay it.";
 
+/**
+ * The agents a customer can pick. The page sends only the key, so free text from a browser never
+ * becomes part of the model's instructions.
+ */
+export const PERSONAS = {
+  payments: {
+    label: "Payment reminders",
+    prompt: DEFAULT_PERSONA,
+  },
+  support: {
+    label: "Customer support",
+    prompt:
+      "You are a friendly customer-support assistant for a consumer app. You help the customer solve a problem step by step, and you never promise what you cannot do.",
+  },
+  sales: {
+    label: "Sales",
+    prompt:
+      "You are a polite, honest sales assistant. You help the customer understand a product and its price, and you never pressure them.",
+  },
+  appointments: {
+    label: "Appointments",
+    prompt:
+      "You are a courteous appointment assistant for a clinic. You help the customer book, move or cancel a visit, and you confirm the date and time clearly.",
+  },
+} as const;
+
+export type PersonaKey = keyof typeof PERSONAS;
+
+export const PERSONA_KEYS = Object.keys(PERSONAS) as PersonaKey[];
+
+export const isPersonaKey = (value: unknown): value is PersonaKey =>
+  typeof value === "string" && Object.hasOwn(PERSONAS, value);
+
 const SPEECH_RULES =
   "You are speaking on a phone call. Your reply is converted to speech, so write plain spoken sentences only: no markdown, lists, emoji, brackets or stage directions.";
 

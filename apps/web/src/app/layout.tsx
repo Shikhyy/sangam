@@ -25,12 +25,22 @@ const devanagari = Noto_Sans_Devanagari({
   display: "swap",
 });
 
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const TITLE = "Sangam: a voice agent that talks like you";
+const DESCRIPTION =
+  "Sangam measures how you mix Hindi and English, then keeps an agent's replies in the same mix. Try it, or build it into your own voice agent.";
+
 export const metadata: Metadata = {
-  title: "Sangam: a voice agent that talks like you",
-  description: "Sangam measures how you mix Hindi and English, then keeps an agent's replies in the same mix.",
+  metadataBase: new URL(SITE),
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: "Sangam",
+  keywords: ["Hinglish", "code-switching", "voice agent", "Hindi", "speech", "API"],
+  openGraph: { type: "website", siteName: "Sangam", title: TITLE, description: DESCRIPTION },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#f2efe4" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

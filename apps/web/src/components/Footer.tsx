@@ -7,8 +7,9 @@ const REPO = "https://github.com/Shikhyy/sangam";
 const PRODUCT = [
   { label: "How it works", href: "/#how" },
   { label: "Playground", href: "/playground" },
-  { label: "Developers", href: "/#developers" },
-  { label: "Results", href: "/#results" },
+  { label: "Docs", href: "/docs" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Share your mix", href: "/card" },
 ];
 
 const RESOURCES = [

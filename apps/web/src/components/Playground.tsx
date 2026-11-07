@@ -1,6 +1,7 @@
 "use client";
 
 import { buildProfile, check, guide, mixMetrics, type OutputScript, type Register, tag } from "@sangam/core";
+import { PERSONAS, type PersonaKey } from "@sangam/llm";
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { earlierUserTokens, type Turn } from "../lib/history";
 import { requestReply } from "../lib/reply-client";
@@ -123,6 +124,7 @@ function ReplyCard(props: {
 export function Playground() {
   const [text, setText] = useState(START_TEXT);
   const [history, setHistory] = useState<Turn[]>([]);
+  const [persona, setPersona] = useState<PersonaKey>("payments");
   const [register, setRegister] = useState<Register>("neutral");
   const [script, setScript] = useState<OutputScript>("roman");
   const [maxSentences, setMaxSentences] = useState(2);
@@ -180,13 +182,14 @@ export function Playground() {
 
     try {
       const [typical, sangam] = await Promise.all([
-        requestReply({ mode: "typical", history: nextHistory }, (partial) =>
+        requestReply({ mode: "typical", history: nextHistory, persona }, (partial) =>
           setReplies((r) => ({ ...r, typical: { ...r.typical, text: partial } })),
         ),
         requestReply(
           {
             mode: "sangam",
             history: nextHistory,
+            persona,
             guidance: guidance.promptFragment,
             targetHindiShare: guidance.target.hindiShare,
           },
@@ -215,7 +218,7 @@ export function Playground() {
         error: error instanceof Error ? error.message : "Couldn't get a reply. Try again.",
       }));
     }
-  }, [text, replies.status, history, guidance, profile]);
+  }, [text, replies.status, history, guidance, profile, persona]);
 
   const copyCode = () => {
     navigator.clipboard.writeText(snippet).then(
@@ -451,6 +454,15 @@ export function Playground() {
               style={{ padding: "18px 20px", display: "flex", flexDirection: "column", gap: 14 }}
             >
               <p className="lab">Reply settings</p>
+              <Segmented
+                label="Agent"
+                value={persona}
+                onChange={setPersona}
+                options={(Object.keys(PERSONAS) as PersonaKey[]).map((key) => ({
+                  value: key,
+                  label: PERSONAS[key].label,
+                }))}
+              />
               <Segmented
                 label="Register"
                 value={register}

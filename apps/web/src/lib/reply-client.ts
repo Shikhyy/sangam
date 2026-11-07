@@ -5,6 +5,7 @@ export interface ReplyBody {
   history: Turn[];
   guidance?: string;
   targetHindiShare?: number;
+  persona?: string;
 }
 
 /** Ask /api/reply for a reply and report the text as it streams in. */

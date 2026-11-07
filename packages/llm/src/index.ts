@@ -16,7 +16,16 @@ export {
   OpenRouterProvider,
   type OpenRouterProviderOptions,
 } from "./openrouter";
-export { buildSystemPrompt, DEFAULT_PERSONA, monolingualGuidance, validateHistory } from "./prompt";
+export {
+  buildSystemPrompt,
+  DEFAULT_PERSONA,
+  isPersonaKey,
+  monolingualGuidance,
+  PERSONA_KEYS,
+  PERSONAS,
+  type PersonaKey,
+  validateHistory,
+} from "./prompt";
 export {
   type ChatTurn,
   type LlmProvider,

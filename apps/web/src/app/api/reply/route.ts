@@ -1,4 +1,4 @@
-import { createProvider, type LlmProvider, LlmUnavailableError, monolingualGuidance } from "@sangam/llm";
+import { createProvider, type LlmProvider, LlmUnavailableError, monolingualGuidance, PERSONAS } from "@sangam/llm";
 import { getGuards, refusal } from "../../../lib/guards";
 import { callerOf } from "../../../lib/rate-limit";
 import { parseReplyRequest } from "../../../lib/reply-request";
@@ -22,7 +22,8 @@ export async function POST(request: Request): Promise<Response> {
 
   const parsed = parseReplyRequest(body);
   if (!parsed.ok) return Response.json({ error: parsed.error }, { status: 400 });
-  const { mode, history, guidance, targetHindiShare } = parsed.value;
+  const { mode, history, guidance, targetHindiShare, persona } = parsed.value;
+  const personaPrompt = persona ? PERSONAS[persona].prompt : undefined;
 
   let provider: LlmProvider;
   try {
@@ -39,8 +40,14 @@ export async function POST(request: Request): Promise<Response> {
 
   const replyRequest =
     mode === "typical"
-      ? { history, guidance: monolingualGuidance("english"), targetHindiShare: 0, signal: request.signal }
-      : { history, guidance, targetHindiShare, signal: request.signal };
+      ? {
+          history,
+          guidance: monolingualGuidance("english"),
+          targetHindiShare: 0,
+          persona: personaPrompt,
+          signal: request.signal,
+        }
+      : { history, guidance, targetHindiShare, persona: personaPrompt, signal: request.signal };
 
   const encoder = new TextEncoder();
   const iterator = provider.reply(replyRequest)[Symbol.asyncIterator]();
