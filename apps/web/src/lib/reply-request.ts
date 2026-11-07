@@ -1,3 +1,5 @@
+import { isPersonaKey, type PersonaKey } from "@sangam/llm";
+
 export type ReplyMode = "typical" | "sangam";
 
 export interface ReplyTurn {
@@ -10,6 +12,8 @@ export interface ParsedReplyRequest {
   history: ReplyTurn[];
   guidance?: string;
   targetHindiShare?: number;
+  /** Which agent to be, by key. Free text is never accepted. */
+  persona?: PersonaKey;
 }
 
 /** Limits that keep one request small, whoever sends it. */
@@ -22,7 +26,7 @@ const fail = (error: string): ParseResult => ({ ok: false, error });
 /** Check an untrusted request body and return a clean, typed request. */
 export function parseReplyRequest(body: unknown): ParseResult {
   if (typeof body !== "object" || body === null) return fail("The request must be a JSON object.");
-  const { mode, history, guidance, targetHindiShare } = body as Record<string, unknown>;
+  const { mode, history, guidance, targetHindiShare, persona } = body as Record<string, unknown>;
 
   if (mode !== "typical" && mode !== "sangam") return fail('mode must be "typical" or "sangam".');
 
@@ -53,6 +57,11 @@ export function parseReplyRequest(body: unknown): ParseResult {
       return fail("targetHindiShare must be a number from 0 to 1.");
     }
     value.targetHindiShare = targetHindiShare;
+  }
+
+  if (persona !== undefined) {
+    if (!isPersonaKey(persona)) return fail("persona is not one of the available agents.");
+    value.persona = persona;
   }
 
   return { ok: true, value };
