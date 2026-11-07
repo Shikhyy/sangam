@@ -12,7 +12,7 @@
     "dev": "pnpm --filter @sangam/web dev",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit -p packages/core/tsconfig.json && tsc --noEmit -p packages/llm/tsconfig.json && tsc --noEmit -p apps/web/tsconfig.json",
+    "typecheck": "tsc --noEmit -p packages/core/tsconfig.json && tsc --noEmit -p packages/llm/tsconfig.json && tsc --noEmit -p packages/speech/tsconfig.json && tsc --noEmit -p apps/web/tsconfig.json",
     "lint": "biome check .",
     "format": "biome format --write ."
   },
