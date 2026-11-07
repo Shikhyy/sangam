@@ -1,0 +1,7 @@
+import type { MetadataRoute } from "next";
+
+/** Everything public may be indexed except the API routes. */
+export default function robots(): MetadataRoute.Robots {
+  const site = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  return { rules: { userAgent: "*", allow: "/", disallow: "/api/" }, sitemap: `${site}/sitemap.xml` };
+}

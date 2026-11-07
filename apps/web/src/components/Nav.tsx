@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
-const LINKS = [
-  { id: "how", label: "How it works" },
-  { id: "developers", label: "Developers" },
-  { id: "results", label: "Results" },
+export type Page = "home" | "playground" | "docs" | "pricing" | "card";
+
+const PAGES: { page: Page; href: string; label: string }[] = [
+  { page: "docs", href: "/docs", label: "Docs" },
+  { page: "pricing", href: "/pricing", label: "Pricing" },
+  { page: "playground", href: "/playground", label: "Playground" },
 ];
 
 const stroke = {
@@ -19,13 +21,13 @@ const stroke = {
 } as const;
 
 /**
- * A floating glass bar. It tightens once the page scrolls, marks the section you are reading, and
- * folds into a menu on a phone.
+ * A floating glass bar. It tightens once the page scrolls, marks where you are, and folds into a
+ * menu on a phone.
  */
-export function Nav({ current = "home" }: { current?: "home" | "playground" }) {
+export function Nav({ current = "home" }: { current?: Page }) {
   const [stuck, setStuck] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const [reading, setReading] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 16);
@@ -34,24 +36,19 @@ export function Nav({ current = "home" }: { current?: "home" | "playground" }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // On the home page, light up "How it works" while that section is on screen.
   useEffect(() => {
     if (current !== "home") return;
-    const sections = LINKS.map((link) => document.getElementById(link.id)).filter(
-      (element): element is HTMLElement => element !== null,
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    for (const section of sections) observer.observe(section);
+    const section = document.getElementById("how");
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => setReading(entry?.isIntersecting ?? false), {
+      rootMargin: "-40% 0px -55% 0px",
+    });
+    observer.observe(section);
     return () => observer.disconnect();
   }, [current]);
 
-  const href = (id: string) => (current === "home" ? `#${id}` : `/#${id}`);
+  const howHref = current === "home" ? "#how" : "/#how";
 
   return (
     <header className={stuck ? "nv is-stuck" : "nv"}>
@@ -61,14 +58,19 @@ export function Nav({ current = "home" }: { current?: "home" | "playground" }) {
         </Link>
 
         <nav className="nv-links" aria-label="Main">
-          {LINKS.map((link) => (
-            <a key={link.id} href={href(link.id)} className={active === link.id ? "on" : undefined}>
-              {link.label}
-            </a>
+          <a href={howHref} className={reading ? "on" : undefined}>
+            How it works
+          </a>
+          {PAGES.map((item) => (
+            <Link
+              key={item.page}
+              href={item.href}
+              className={current === item.page ? "on" : undefined}
+              aria-current={current === item.page ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
           ))}
-          <Link href="/playground" className={current === "playground" ? "on" : undefined}>
-            Playground
-          </Link>
         </nav>
 
         <div className="nv-right">
@@ -101,14 +103,14 @@ export function Nav({ current = "home" }: { current?: "home" | "playground" }) {
 
       {open ? (
         <div id="nv-sheet" className="nv-sheet">
-          {LINKS.map((link) => (
-            <a key={link.id} href={href(link.id)} onClick={() => setOpen(false)}>
-              {link.label}
-            </a>
+          <a href={howHref} onClick={() => setOpen(false)}>
+            How it works
+          </a>
+          {PAGES.map((item) => (
+            <Link key={item.page} href={item.href} onClick={() => setOpen(false)}>
+              {item.label}
+            </Link>
           ))}
-          <Link href="/playground" onClick={() => setOpen(false)}>
-            Playground
-          </Link>
         </div>
       ) : null}
     </header>
