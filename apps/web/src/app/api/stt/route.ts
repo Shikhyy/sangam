@@ -1,12 +1,12 @@
 import { createSpeech, SpeechError } from "@sangam/speech";
-import { callerOf, createRateLimiter } from "../../../lib/rate-limit";
+import { estimateClipSeconds, getGuards, refusal } from "../../../lib/guards";
+import { callerOf } from "../../../lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /** 30 seconds of 16 kHz mono WAV is about 1 MB, so this leaves room without accepting anything huge. */
 const MAX_BYTES = 3 * 1024 * 1024;
-const allow = createRateLimiter(20, 60_000);
 
 /** Tell the page whether Gnani speech is set up, so it knows whether to use it or the browser's own. */
 export function GET(): Response {
@@ -25,8 +25,11 @@ export async function POST(request: Request): Promise<Response> {
       { status: 503 },
     );
   }
-  if (!allow(callerOf(request))) {
-    return Response.json({ error: "Too many recordings in a minute. Wait a moment." }, { status: 429 });
+
+  const guards = getGuards();
+  const caller = callerOf(request);
+  if (!guards.speech.perMinute(caller)) {
+    return refusal({ ok: false, message: "Too many recordings in a minute. Wait a moment.", retryAfterSec: 30 });
   }
 
   let form: FormData;
@@ -44,10 +47,17 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ error: "That recording is too long. Keep it under 30 seconds." }, { status: 413 });
   }
 
+  // Set the seconds aside before spending anything, so a cap can never be passed by a burst of requests.
+  const seconds = estimateClipSeconds(audio.size);
+  const reservation = guards.speech.budget.reserve(caller, seconds);
+  if (!reservation.ok) return refusal(reservation);
+
   try {
     const result = await speech.transcribe(audio, "speech.wav");
+    reservation.commit(seconds);
     return Response.json(result, { headers: { "cache-control": "no-store" } });
   } catch (error) {
+    reservation.release();
     if (error instanceof SpeechError) {
       const status = error.status === 429 ? 429 : error.status === 400 || error.status === 422 ? 400 : 502;
       return Response.json({ error: error.message }, { status });

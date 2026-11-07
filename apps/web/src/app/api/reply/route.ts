@@ -1,4 +1,6 @@
 import { createProvider, type LlmProvider, LlmUnavailableError, monolingualGuidance } from "@sangam/llm";
+import { getGuards, refusal } from "../../../lib/guards";
+import { callerOf } from "../../../lib/rate-limit";
 import { parseReplyRequest } from "../../../lib/reply-request";
 
 export const runtime = "nodejs";
@@ -27,6 +29,12 @@ export async function POST(request: Request): Promise<Response> {
     provider = createProvider(process.env);
   } catch {
     return Response.json({ error: "The reply service is not configured." }, { status: 503 });
+  }
+
+  // The mock costs nothing. A real provider is limited so the free quota is never used up by one visitor.
+  if (provider.name !== "mock") {
+    const denied = getGuards().reply.take(callerOf(request));
+    if (denied) return refusal(denied);
   }
 
   const replyRequest =
