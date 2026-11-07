@@ -1,4 +1,4 @@
-/* Shared by the docs, pricing and card pages. Uses the tokens and the vs- styles from globals.css and landing.css. */
+/* Shared by the docs and card pages. Uses the tokens and the vs- styles from globals.css and landing.css. */
 .dc-head {
   max-width: 1240px;
   margin: 0 auto;
@@ -170,94 +170,6 @@
   max-width: 720px;
   color: var(--ink-2);
   font: 400 16px / 1.9 var(--font-ui);
-}
-
-/* ---- Pricing ---- */
-.pr-grid {
-  max-width: 1240px;
-  margin: 24px auto 0;
-  padding: 0 32px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: 20px;
-}
-.pr-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 30px 28px;
-  border-radius: 24px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-}
-.pr-card.featured {
-  background: var(--raised);
-  border-color: var(--olive);
-  box-shadow: 0 30px 60px -36px rgba(73, 75, 53, 0.6);
-}
-.pr-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.pr-card h2 {
-  margin: 0;
-  font: 400 40px / 1 var(--font-serif);
-}
-.pr-tag {
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--sunken);
-  color: var(--ink-2);
-  font: 600 12px / 1.4 var(--font-ui);
-}
-.pr-tag.live {
-  background: var(--ok-t);
-  color: var(--ok);
-}
-.pr-blurb {
-  margin: 0;
-  font: 400 16px / 1.5 var(--font-ui);
-  color: var(--ink-2);
-}
-.pr-price {
-  margin: 4px 0 0;
-  font: 400 52px / 1 var(--font-serif);
-  color: #b9b39f;
-}
-.pr-card ul {
-  margin: 8px 0 16px;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-}
-.pr-card li {
-  position: relative;
-  padding-left: 26px;
-  font: 400 15px / 1.5 var(--font-ui);
-  color: var(--ink-2);
-}
-.pr-card li::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: 7px;
-  width: 12px;
-  height: 7px;
-  border-left: 2px solid var(--olive);
-  border-bottom: 2px solid var(--olive);
-  transform: rotate(-45deg);
-}
-.pr-note {
-  max-width: 640px;
-  margin: 40px auto 0;
-  padding: 0 24px;
-  text-align: center;
-  font: 400 15px / 1.6 var(--font-ui);
-  color: var(--ink-2);
 }
 
 /* ---- Share card ---- */
