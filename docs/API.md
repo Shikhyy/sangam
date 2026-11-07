@@ -127,9 +127,12 @@ Response 200:
   "deltaCmi": 4.2,
   "deltaSwitchRate": 0.05,
   "judged": true,
-  "pass": true
+  "pass": true,
+  "advice": null
 }
 ```
+
+`advice` is `null` when the draft passed. When it failed it is a sentence for the next prompt, such as "That draft is 0% Hindi, but this speaker is about 80% Hindi. Rewrite it with more Hindi: ...". It says which way the draft drifted and how to fix it.
 
 `pass` is true when `deltaHindiShare <= 0.15` (the tolerance can be changed). Replies with fewer than 4 Hindi or English tokens are too short to judge fairly: they return `judged: false` and always pass. `deltaHindiShare` is the "mirror error" used in the evaluation.
 

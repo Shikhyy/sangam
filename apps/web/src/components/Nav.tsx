@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
-export type Page = "home" | "playground" | "docs" | "card";
+export type Page = "home" | "playground" | "docs" | "results" | "card";
 
 const PAGES: { page: Page; href: string; label: string }[] = [
   { page: "docs", href: "/docs", label: "Docs" },
   { page: "playground", href: "/playground", label: "Playground" },
+  { page: "results", href: "/results", label: "Results" },
 ];
 
 const stroke = {

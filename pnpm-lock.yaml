@@ -29,6 +29,9 @@ importers:
       '@sangam/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@sangam/eval':
+        specifier: workspace:*
+        version: link:../../packages/eval
       '@sangam/llm':
         specifier: workspace:*
         version: link:../../packages/llm
@@ -62,6 +65,9 @@ importers:
       '@sangam/llm':
         specifier: workspace:*
         version: link:../llm
+      '@sangam/speech':
+        specifier: workspace:*
+        version: link:../speech
 
   packages/llm:
     dependencies:
@@ -69,6 +75,12 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
     devDependencies:
+      '@sangam/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/sdk:
+    dependencies:
       '@sangam/core':
         specifier: workspace:*
         version: link:../core

@@ -38,13 +38,30 @@ pnpm eval:tagger data/eval/tagger.heldout.jsonl
 pnpm eval:tagger
 ```
 
+## E2 (small). Speech speed and round trip
+
+**Question.** How fast is Gnani speech, and does the speaker's Hindi and English mix survive being spoken and heard again?
+
+**Setup.** `pnpm eval:speech`. Ten mixed Hindi and English sentences were spoken by Gnani Timbre (v3.0, voice Shivani), and the audio was transcribed again by Gnani Prisma (v3.0, `codemix`). One request at a time, from a laptop, on 7 Nov 2026.
+
+| Step                        | Median | Slowest of 10 |
+| --------------------------- | ------ | ------------- |
+| Timbre: text to audio ready | 0.83 s | 1.35 s        |
+| Prisma: audio to text       | 0.27 s | 0.53 s        |
+
+The Hindi share of a sentence survived the round trip to within 1.8 points on average (worst case 14.3 points). Prisma wrote Hindi words in Devanagari and English words in Latin script in all 10 transcripts, so a transcript looks like "यार meeting कल है but मुझे time नहीं पता". Sangam's tagger reads both scripts, so this works without any conversion.
+
+**Caveats.** Ten clips, all synthetic speech from Timbre itself. It says nothing about real voices, noise or accents. The audio comes back whole, so 0.83 s is the time until the audio is ready, not the time to first sound. Times include the network from a laptop and will differ on a server. The worst case (14.3 points) is "mera phone charge nahi ho raha hai": "phone" and "charge" came back in Devanagari ("फोन", "चार्ज"), so they were counted as Hindi. English words written in Devanagari are the main way recognition can shift the measured mix.
+
+Reproduce: `pnpm eval:speech` (uses a few seconds of Gnani credit).
+
 ## E3. Mirror fidelity
 
 **Question.** Does Sangam's guidance move an agent's replies closer to the speaker's own mix than an agent that always answers in Hindi, or always in English?
 
 **Setup.** `pnpm eval:mirror`. Three scripted speakers (Hindi base with English nouns, English base with Hindi seasoning, and a mid-sentence switcher) each ask five neutral questions (a payment date, a booking change, a late order, a plan question, a bill complaint). Three agents answer each question using the real free OpenRouter models: Hindi only, English only, and Sangam guidance. The score is the gap between each reply's Hindi share and the speaker's. That is 45 replies.
 
-**Status: not run to completion.** The free OpenRouter quota ran out partway through (a first pass reached 37 of 45 replies, then the provider returned 429 "too many requests", and a second pass reached only 6 before stopping). Partial numbers from a handful of replies would mean nothing, so none are reported. The script now saves every reply as it arrives and carries on where it stopped, so it can be finished when the quota resets:
+**Status: not run to completion.** The free OpenRouter quota ran out partway through (the first pass reached 37 of 45 replies and was lost because progress was not saved; since then each pass has saved a few more, 19 of 45 so far, before the provider returned 429 "too many requests"). Partial numbers from a handful of replies would mean nothing, so none are reported. The script now saves every reply as it arrives and carries on where it stopped, so it can be finished when the quota resets:
 
 ```bash
 pnpm eval:mirror
@@ -57,6 +74,6 @@ Run it again until it prints the summary table. Results are written to `eval/out
 ## Not done yet
 
 - A second human annotator, and an agreement score (`pnpm eval:agreement`).
-- E2: speech recognition robustness on real clips.
+- E2 on real clips: noise, accents and real voices (the small test above used synthetic speech only).
 - E4: a human A/B test with at least 15 people.
 - The microphone path has only been tested with generated audio, not on a real phone.

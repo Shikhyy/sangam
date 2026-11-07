@@ -57,4 +57,19 @@ describe("check", () => {
     expect(result.replyProfile.switchRate).toBe(1);
     expect(result.deltaSwitchRate).toBeCloseTo(0.7);
   });
+
+  it("says which way a failed draft drifted and how to fix it", () => {
+    const tooEnglish = check("Your payment is due tomorrow", target(0.8));
+    expect(tooEnglish.advice).toContain("0% Hindi");
+    expect(tooEnglish.advice).toContain("80% Hindi");
+    expect(tooEnglish.advice).toContain("more Hindi");
+
+    const tooHindi = check("Aapka kal bahut kaam hai", target(0.2));
+    expect(tooHindi.advice).toContain("more English");
+  });
+
+  it("gives no advice for a draft that passed or was too short to judge", () => {
+    expect(check("Aapka payment kal due hai", target(0.6)).advice).toBeNull();
+    expect(check("Theek hai.", target(0.2)).advice).toBeNull();
+  });
 });

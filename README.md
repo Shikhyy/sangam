@@ -7,7 +7,7 @@
 Sangam measures how a person mixes Hindi and English, then keeps an agent's replies in the same mix.
 Built on Gnani's Prisma speech recognition and Timbre voice for the Great Indian AI Internship Challenge.
 
-[**Live demo**](https://sangam-voice.vercel.app) · [Playground](https://sangam-voice.vercel.app/playground) · [Docs](https://sangam-voice.vercel.app/docs) · [Results](docs/RESULTS.md)
+[**Live demo**](https://sangam-voice.vercel.app) · [Playground](https://sangam-voice.vercel.app/playground) · [Docs](https://sangam-voice.vercel.app/docs) · [Results](https://sangam-voice.vercel.app/results)
 
 ![Sangam home page](docs/images/home.png)
 
@@ -22,7 +22,7 @@ People in India rarely speak one language. A sentence like _"yaar meeting kal ha
 1. **Tags every word** as Hindi, English or neutral (names, numbers, fillers), in Roman or Devanagari script.
 2. **Builds a profile** of how you speak: Hindi share, how often you switch language, and a style label such as "mid-sentence switcher". Recent sentences count more than old ones.
 3. **Guides the model** with a target mix and a few of your own words to reuse. With too little to go on (under 20 words) it falls back to a balanced mix and says so.
-4. **Checks the reply** against your mix and reports the gap, so a draft that drifts can be retried.
+4. **Checks the reply** against your mix and reports the gap. When a draft drifts it also says which way and how to fix it (`advice`), ready to paste into the next prompt.
 5. **Speaks the reply** with a Gnani voice, and listens with Gnani speech recognition.
 
 ![The playground](docs/images/playground.png)
@@ -85,17 +85,33 @@ curl -s -X POST https://sangam-voice.vercel.app/api/v1/profile \
 
 There are three endpoints, `profile`, `guide` and `check`. They are stateless and keep no data. See [docs/API.md](docs/API.md).
 
+Or use the typed client in [`packages/sdk`](packages/sdk):
+
+```ts
+import { Sangam } from "@sangam/sdk";
+
+const sangam = new Sangam({ baseUrl: "https://sangam-voice.vercel.app" });
+
+const { profile } = await sangam.profile(["yaar meeting kal hai but mujhe time nahi pata"]);
+const guidance = await sangam.guide({ profile }); // put guidance.promptFragment in your model's prompt
+const result = await sangam.check(reply, guidance.target);
+if (result.advice) {
+  // the draft drifted: add result.advice to the prompt and ask for a closer rewrite
+}
+```
+
 ## Results
 
-Measured honestly, on synthetic data. The full write-up, including what is weak, is in [docs/RESULTS.md](docs/RESULTS.md).
+Measured honestly, on synthetic data. The live page is [/results](https://sangam-voice.vercel.app/results) and the full write-up, including what is weak, is in [docs/RESULTS.md](docs/RESULTS.md).
 
-| What                                                                                                    | Result                                                                                              |
-| ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Tagger accuracy, **held-out** set (69 utterances, 398 tokens, written after the word list was extended) | **96.7%**                                                                                           |
-| Same set, with the neighbour rules switched off                                                         | 96.2%                                                                                               |
-| Same set, ignoring unknown words                                                                        | 84.9%                                                                                               |
-| Tagger accuracy, development set (123 utterances)                                                       | 98.9%, but this set was used to extend the word list, so it is **not evidence**                     |
-| Mirror fidelity (do replies match the speaker's mix better than Hindi-only or English-only?)            | **Not finished.** The free model quota ran out partway. The script is resumable: `pnpm eval:mirror` |
+| What                                                                                                    | Result                                                                                                                                                              |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tagger accuracy, **held-out** set (69 utterances, 398 tokens, written after the word list was extended) | **96.7%**                                                                                                                                                           |
+| Same set, with the neighbour rules switched off                                                         | 96.2%                                                                                                                                                               |
+| Same set, ignoring unknown words                                                                        | 84.9%                                                                                                                                                               |
+| Tagger accuracy, development set (123 utterances)                                                       | 98.9%, but this set was used to extend the word list, so it is **not evidence**                                                                                     |
+| Speech: Gnani Timbre text to audio, median of 10 clips                                                  | **0.83 s** (slowest 1.35 s). Prisma audio to text: 0.27 s. The Hindi share survived the round trip to within 1.8 points on average. Synthetic speech, from a laptop |
+| Mirror fidelity (do replies match the speaker's mix better than Hindi-only or English-only?)            | **Not finished.** 19 of 45 replies saved before the free model quota ran out. The script is resumable: `pnpm eval:mirror`                                           |
 
 Things to know before trusting these numbers:
 
@@ -120,6 +136,7 @@ It works with no keys, in a scripted mock mode. To use real models set `SANGAM_M
 pnpm test                                      # unit tests
 pnpm typecheck && pnpm lint
 pnpm eval:tagger data/eval/tagger.heldout.jsonl  # tagger accuracy
+pnpm eval:speech                               # Gnani speed and round trip (uses a little credit)
 pnpm eval:mirror                               # mirror fidelity (uses free model quota)
 ```
 
