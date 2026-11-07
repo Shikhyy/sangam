@@ -153,6 +153,15 @@ export function Playground() {
   }, []);
   const { listening, transcribing, toggleMic, play } = useVoice({ onText: setText, onNotice: setNotice, onLevel });
 
+  // Ask the server which mode it runs in, so the badge is right before the first reply comes back.
+  const [serverLive, setServerLive] = useState(false);
+  useEffect(() => {
+    fetch("/api/health")
+      .then((response) => response.json() as Promise<{ reply?: string }>)
+      .then((health) => setServerLive(health.reply === "openrouter" || health.reply === "anthropic"))
+      .catch(() => setServerLive(false));
+  }, []);
+
   useEffect(() => {
     field.current.share = metrics.n > 0 ? metrics.hindiShare : 0.5;
     field.current.tangle = Math.min(1, metrics.switchRate * 1.6);
@@ -227,7 +236,7 @@ export function Playground() {
     );
   };
 
-  const live = replies.provider !== "mock";
+  const live = replies.provider !== "mock" || serverLive;
   const minority = profile.matrixLanguage === "EN" ? "Hindi" : "English";
   const percent = (value: number) => `${Math.round(value * 100)}%`;
   const hasWords = metrics.n > 0;
