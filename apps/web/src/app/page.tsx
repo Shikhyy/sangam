@@ -54,9 +54,21 @@ const ENDPOINTS = [
 ];
 
 const RESULTS = [
-  { label: "Tagger accuracy", note: "On [ N ] labelled utterances, with a second annotator." },
-  { label: "Mirror gap", note: "Typical agent against Sangam, in points of Hindi share." },
-  { label: "Time to first sound", note: "Median and slowest 5 percent, on the hosted setup." },
+  {
+    label: "Tagger accuracy",
+    value: "96.7%",
+    note: "On 398 words in 69 held-out utterances. Labelled by an AI, with no second human annotator yet.",
+  },
+  {
+    label: "Mirror gap",
+    value: "Not yet",
+    note: "Typical agent against Sangam, in points of Hindi share. The live-model run is unfinished.",
+  },
+  {
+    label: "Time to first sound",
+    value: "Not yet",
+    note: "Median and slowest 5 percent, on the hosted setup. Not measured.",
+  },
 ];
 
 const Said = () => (
@@ -273,8 +285,8 @@ export default function Home() {
                 Measured, <em>not claimed</em>
               </h2>
               <p className="vs-lead">
-                We publish the numbers, the sample sizes and the failures. Results appear here once the evaluation has
-                run. Until then these are placeholders.
+                We publish the numbers, the sample sizes and the failures. Where something has not been measured, it
+                says so.
               </p>
             </div>
           </Reveal>
@@ -282,7 +294,7 @@ export default function Home() {
             <div className="vs-res">
               {RESULTS.map((result) => (
                 <div key={result.label}>
-                  <b>[ value ]</b>
+                  <b>{result.value}</b>
                   <h3>{result.label}</h3>
                   <p>{result.note}</p>
                 </div>
