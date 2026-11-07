@@ -10,3 +10,6 @@ data/audio/
 eval/out/
 *.log
 *.tsbuildinfo
+
+# Written by next dev on every start
+apps/web/AGENTS.md
