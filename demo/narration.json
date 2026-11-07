@@ -1,0 +1,30 @@
+{
+  "voice": "en-IN-NeerjaNeural",
+  "rate": "+4%",
+  "scenes": [
+    {
+      "id": "s1",
+      "text": "Most voice agents answer in textbook Hindi, or textbook English. That is not how you talk. Sangam is a voice agent that talks like you."
+    },
+    {
+      "id": "s2",
+      "text": "Say it the way you really say it. Sangam tags every word, Hindi or English, and measures how you mix them."
+    },
+    {
+      "id": "s3",
+      "text": "Then it replies. On the left, a typical agent: stiff English. On the right, Sangam: your own mix, with the gap measured."
+    },
+    {
+      "id": "s4",
+      "text": "Gnani Prisma listens. Gnani Timbre speaks the reply."
+    },
+    {
+      "id": "s5",
+      "text": "Measured, not claimed: ninety six point seven percent tagging accuracy on held out sentences."
+    },
+    {
+      "id": "s6",
+      "text": "Sangam. A voice agent that talks like you."
+    }
+  ]
+}

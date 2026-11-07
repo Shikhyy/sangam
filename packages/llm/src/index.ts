@@ -12,6 +12,7 @@ export { DEFAULT_MOCK_SCRIPTS, MockProvider, type MockProviderOptions, type Mock
 export {
   FREE_MODELS,
   isFreeModel,
+  isLeakedReasoning,
   OPENROUTER_URL,
   OpenRouterProvider,
   type OpenRouterProviderOptions,

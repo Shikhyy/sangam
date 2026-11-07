@@ -54,6 +54,45 @@ export function textOfLine(line: string): string | null {
   return typeof content === "string" && content.length > 0 ? content : null;
 }
 
+/** How much of a reply is read before deciding it is a real answer and not the model thinking aloud. */
+const HEAD_CHARS = 80;
+
+/**
+ * Some free models, and the free router in particular, write their reasoning into the reply instead of an answer
+ * ("1. **Analyze the Request:** ..."). That must never reach a person or the speech voice. The reply is meant to be
+ * plain spoken sentences, so markdown, a numbered or bulleted start, or analysis headings mark it as a leak.
+ */
+export function isLeakedReasoning(text: string): boolean {
+  return /\*\*|^\s*\d+\.\s|^\s*[*\u2022-]\s|analy[sz]e (the )?(user|request|input)|thinking process|^\s*let me (think|analy)/i.test(
+    text.slice(0, HEAD_CHARS * 2),
+  );
+}
+
+/** Holds back the start of a reply until it has been checked, then lets everything through. */
+function headGate(model: string) {
+  let head = "";
+  let held: string[] = [];
+  let open = false;
+  const release = () => {
+    if (isLeakedReasoning(head)) throw new LlmUnavailableError(`${model} sent its reasoning instead of a reply`);
+    open = true;
+    const out = held;
+    held = [];
+    return out;
+  };
+  return {
+    push(text: string): string[] {
+      if (open) return [text];
+      head += text;
+      held.push(text);
+      return head.length >= HEAD_CHARS ? release() : [];
+    },
+    finish(): string[] {
+      return open || held.length === 0 ? [] : release();
+    },
+  };
+}
+
 /** Statuses that mean "this model is busy or broken, try the next one". */
 const RETRYABLE = new Set([404, 408, 429, 500, 502, 503, 504]);
 
@@ -119,6 +158,7 @@ export class OpenRouterProvider implements LlmProvider {
         }
         if (!response.body) throw new LlmUnavailableError(`OpenRouter sent no body for ${model}`, response.status);
 
+        const gate = headGate(model);
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
@@ -129,26 +169,39 @@ export class OpenRouterProvider implements LlmProvider {
             const text = textOfLine(buffer.slice(0, newline).trim());
             buffer = buffer.slice(newline + 1);
             if (text) {
-              spoke = true;
-              yield text;
+              for (const piece of gate.push(text)) {
+                spoke = true;
+                yield piece;
+              }
             }
             newline = buffer.indexOf("\n");
           }
         }
         const rest = textOfLine(buffer.trim());
         if (rest) {
+          for (const piece of gate.push(rest)) {
+            spoke = true;
+            yield piece;
+          }
+        }
+        for (const piece of gate.finish()) {
           spoke = true;
-          yield rest;
+          yield piece;
         }
         if (spoke) return;
         lastError = new LlmUnavailableError(`${model} returned an empty reply`);
       } catch (error) {
         if (request.signal?.aborted) throw error;
         if (spoke) throw error;
+        if (error instanceof DOMException && (error.name === "TimeoutError" || error.name === "AbortError")) {
+          lastError = new LlmUnavailableError(`${model} took too long to answer`);
+          continue;
+        }
         if (error instanceof LlmUnavailableError && error.status !== null && !RETRYABLE.has(error.status)) throw error;
         lastError = error instanceof Error ? error : new LlmUnavailableError(String(error));
       }
     }
-    throw lastError;
+    // A network failure or anything else unexpected means the service could not be reached: the busy error.
+    throw lastError instanceof LlmUnavailableError ? lastError : new LlmUnavailableError(lastError.message);
   }
 }
