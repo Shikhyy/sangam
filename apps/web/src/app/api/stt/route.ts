@@ -4,6 +4,8 @@ import { callerOf } from "../../../lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/** Seconds a request may run on a host that limits it. Replies stream, and speech calls wait on Gnani. */
+export const maxDuration = 30;
 
 /** 30 seconds of 16 kHz mono WAV is about 1 MB, so this leaves room without accepting anything huge. */
 const MAX_BYTES = 3 * 1024 * 1024;

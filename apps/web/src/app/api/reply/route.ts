@@ -5,6 +5,8 @@ import { parseReplyRequest } from "../../../lib/reply-request";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/** Seconds a request may run on a host that limits it. Replies stream, and speech calls wait on Gnani. */
+export const maxDuration = 30;
 
 /**
  * Stream a reply as plain text.
