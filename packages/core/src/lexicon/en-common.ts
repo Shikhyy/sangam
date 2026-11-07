@@ -3,6 +3,7 @@
 // are tagged with confidence, and the tagger also tries simple suffix stripping
 // (meetings, calling, called). Words that are also valid Hindi live in ambiguous.ts.
 const WORDS = `
+monday tuesday wednesday thursday friday saturday sunday january february march april june july august september october november december
 a an and or but if then than that this these those there here where when why how what who whom
 whose which while because since until before after above below between into onto over under
 again further once only own same too very just also even still yet already always never often

@@ -1,0 +1,123 @@
+{"id":"e001","text":"aapka EMI kal due hai","source":"claude-written","tokens":"aapka EMI kal due hai","labels":"HI EN HI EN HI"}
+{"id":"e002","text":"mujhe salary kal tak mil jayegi","source":"claude-written","tokens":"mujhe salary kal tak mil jayegi","labels":"HI EN HI HI HI HI"}
+{"id":"e003","text":"payment abhi nahi ho raha hai","source":"claude-written","tokens":"payment abhi nahi ho raha hai","labels":"EN HI HI HI HI HI"}
+{"id":"e004","text":"ye wala amount galat lag raha hai","source":"claude-written","tokens":"ye wala amount galat lag raha hai","labels":"HI HI EN HI HI HI HI"}
+{"id":"e005","text":"main kal bank jaunga","source":"claude-written","tokens":"main kal bank jaunga","labels":"HI HI EN HI"}
+{"id":"e006","text":"mera account balance kitna hai","source":"claude-written","tokens":"mera account balance kitna hai","labels":"HI EN EN HI HI"}
+{"id":"e007","text":"please mujhe ek reminder bhej do","source":"claude-written","tokens":"please mujhe ek reminder bhej do","labels":"EN HI HI EN HI HI"}
+{"id":"e008","text":"OTP nahi aaya abhi tak","source":"claude-written","tokens":"OTP nahi aaya abhi tak","labels":"EN HI HI HI HI"}
+{"id":"e009","text":"I will pay on Friday","source":"claude-written","tokens":"I will pay on Friday","labels":"EN EN EN EN EN"}
+{"id":"e010","text":"kal to main free hoon","source":"claude-written","tokens":"kal to main free hoon","labels":"HI HI HI EN HI"}
+{"id":"e011","text":"5000 rupaye kaat liye gaye","source":"claude-written","tokens":"5000 rupaye kaat liye gaye","labels":"X HI HI HI HI"}
+{"id":"e012","text":"late fee kyun lagi","source":"claude-written","tokens":"late fee kyun lagi","labels":"EN EN HI HI"}
+{"id":"e013","text":"aapka payment receive ho gaya hai","source":"claude-written","tokens":"aapka payment receive ho gaya hai","labels":"HI EN EN HI HI HI"}
+{"id":"e014","text":"thanks bhai ab sab theek hai","source":"claude-written","tokens":"thanks bhai ab sab theek hai","labels":"EN HI HI HI HI HI"}
+{"id":"e015","text":"mujhe EMI date change karni hai","source":"claude-written","tokens":"mujhe EMI date change karni hai","labels":"HI EN EN EN HI HI"}
+{"id":"e016","text":"can you please ek baar phir se check karo","source":"claude-written","tokens":"can you please ek baar phir se check karo","labels":"EN EN EN HI HI HI HI EN HI"}
+{"id":"e017","text":"loan ka interest kitna hai","source":"claude-written","tokens":"loan ka interest kitna hai","labels":"EN HI EN HI HI"}
+{"id":"e018","text":"no problem main kal tak kar dunga","source":"claude-written","tokens":"no problem main kal tak kar dunga","labels":"EN EN HI HI HI HI HI"}
+{"id":"e019","text":"card block ho gaya kya","source":"claude-written","tokens":"card block ho gaya kya","labels":"EN EN HI HI HI"}
+{"id":"e020","text":"UPI se payment fail ho gaya","source":"claude-written","tokens":"UPI se payment fail ho gaya","labels":"EN HI EN EN HI HI"}
+{"id":"e021","text":"मुझे कल meeting में जाना है","source":"claude-written","tokens":"मुझे कल meeting में जाना है","labels":"HI HI EN HI HI HI"}
+{"id":"e022","text":"आपका payment due है","source":"claude-written","tokens":"आपका payment due है","labels":"HI EN EN HI"}
+{"id":"e023","text":"मेरा order अभी तक नहीं आया","source":"claude-written","tokens":"मेरा order अभी तक नहीं आया","labels":"HI EN HI HI HI HI"}
+{"id":"e024","text":"मीटिंग कल सुबह है","source":"claude-written","tokens":"मीटिंग कल सुबह है","labels":"EN HI HI HI"}
+{"id":"e025","text":"ये plan बहुत अच्छा है","source":"claude-written","tokens":"ये plan बहुत अच्छा है","labels":"HI EN HI HI HI"}
+{"id":"e026","text":"कृपया अपना OTP बताइए","source":"claude-written","tokens":"कृपया अपना OTP बताइए","labels":"HI HI EN HI"}
+{"id":"e027","text":"मैं office से बोल रहा हूँ","source":"claude-written","tokens":"मैं office से बोल रहा हूँ","labels":"HI EN HI HI HI HI"}
+{"id":"e028","text":"डिलीवरी कब तक होगी","source":"claude-written","tokens":"डिलीवरी कब तक होगी","labels":"EN HI HI HI"}
+{"id":"e029","text":"धन्यवाद आपका दिन शुभ हो","source":"claude-written","tokens":"धन्यवाद आपका दिन शुभ हो","labels":"HI HI HI HI HI"}
+{"id":"e030","text":"मुझे refund चाहिए","source":"claude-written","tokens":"मुझे refund चाहिए","labels":"HI EN HI"}
+{"id":"e031","text":"mera phone charge nahi ho raha","source":"claude-written","tokens":"mera phone charge nahi ho raha","labels":"HI EN EN HI HI HI"}
+{"id":"e032","text":"internet bahut slow chal raha hai","source":"claude-written","tokens":"internet bahut slow chal raha hai","labels":"EN HI EN HI HI HI"}
+{"id":"e033","text":"app open hi nahi hota","source":"claude-written","tokens":"app open hi nahi hota","labels":"EN EN HI HI HI"}
+{"id":"e034","text":"maine password reset kar diya","source":"claude-written","tokens":"maine password reset kar diya","labels":"HI EN EN HI HI"}
+{"id":"e035","text":"error aa raha hai screen par","source":"claude-written","tokens":"error aa raha hai screen par","labels":"EN HI HI HI EN HI"}
+{"id":"e036","text":"sorry network issue tha","source":"claude-written","tokens":"sorry network issue tha","labels":"EN EN EN HI"}
+{"id":"e037","text":"aapki complaint register ho gayi hai","source":"claude-written","tokens":"aapki complaint register ho gayi hai","labels":"HI EN EN HI HI HI"}
+{"id":"e038","text":"ticket number kya hai","source":"claude-written","tokens":"ticket number kya hai","labels":"EN EN HI HI"}
+{"id":"e039","text":"hmm let me check karta hoon","source":"claude-written","tokens":"hmm let me check karta hoon","labels":"X EN EN EN HI HI"}
+{"id":"e040","text":"kya aap mujhe bata sakte ho","source":"claude-written","tokens":"kya aap mujhe bata sakte ho","labels":"HI HI HI HI HI HI"}
+{"id":"e041","text":"my order kab aayega","source":"claude-written","tokens":"my order kab aayega","labels":"EN EN HI HI"}
+{"id":"e042","text":"order cancel karna hai mujhe","source":"claude-written","tokens":"order cancel karna hai mujhe","labels":"EN EN HI HI HI"}
+{"id":"e043","text":"wo to bahut easy hai","source":"claude-written","tokens":"wo to bahut easy hai","labels":"HI HI HI EN HI"}
+{"id":"e044","text":"it is working fine now","source":"claude-written","tokens":"it is working fine now","labels":"EN EN EN EN EN"}
+{"id":"e045","text":"this is not working yaar","source":"claude-written","tokens":"this is not working yaar","labels":"EN EN EN EN HI"}
+{"id":"e046","text":"server down hai shayad","source":"claude-written","tokens":"server down hai shayad","labels":"EN EN HI HI"}
+{"id":"e047","text":"ek minute ruko","source":"claude-written","tokens":"ek minute ruko","labels":"HI EN HI"}
+{"id":"e048","text":"aap ka number kya hai","source":"claude-written","tokens":"aap ka number kya hai","labels":"HI HI EN HI HI"}
+{"id":"e049","text":"call me back please","source":"claude-written","tokens":"call me back please","labels":"EN EN EN EN"}
+{"id":"e050","text":"mujhe call karo jab free ho","source":"claude-written","tokens":"mujhe call karo jab free ho","labels":"HI EN HI HI EN HI"}
+{"id":"e051","text":"ye plan kitne ka hai","source":"claude-written","tokens":"ye plan kitne ka hai","labels":"HI EN HI HI HI"}
+{"id":"e052","text":"discount milega kya","source":"claude-written","tokens":"discount milega kya","labels":"EN HI HI"}
+{"id":"e053","text":"is month ka bill bahut zyada hai","source":"claude-written","tokens":"is month ka bill bahut zyada hai","labels":"HI EN HI EN HI HI HI"}
+{"id":"e054","text":"premium plan ke saath kya milta hai","source":"claude-written","tokens":"premium plan ke saath kya milta hai","labels":"EN EN HI HI HI HI HI"}
+{"id":"e055","text":"aap free trial try kar sakte hain","source":"claude-written","tokens":"aap free trial try kar sakte hain","labels":"HI EN EN EN HI HI HI"}
+{"id":"e056","text":"price thoda kam karo na","source":"claude-written","tokens":"price thoda kam karo na","labels":"EN HI HI HI HI"}
+{"id":"e057","text":"mujhe demo chahiye tomorrow","source":"claude-written","tokens":"mujhe demo chahiye tomorrow","labels":"HI EN HI EN"}
+{"id":"e058","text":"kitna time lagega","source":"claude-written","tokens":"kitna time lagega","labels":"HI EN HI"}
+{"id":"e059","text":"offer aaj tak hi hai","source":"claude-written","tokens":"offer aaj tak hi hai","labels":"EN HI HI HI HI"}
+{"id":"e060","text":"ye product bahut popular hai","source":"claude-written","tokens":"ye product bahut popular hai","labels":"HI EN HI EN HI"}
+{"id":"e061","text":"I think kal tak ho jayega","source":"claude-written","tokens":"I think kal tak ho jayega","labels":"EN EN HI HI HI HI"}
+{"id":"e062","text":"best deal hai bilkul","source":"claude-written","tokens":"best deal hai bilkul","labels":"EN EN HI HI"}
+{"id":"e063","text":"aap quantity kitni lena chahte hain","source":"claude-written","tokens":"aap quantity kitni lena chahte hain","labels":"HI EN HI HI HI HI"}
+{"id":"e064","text":"warranty ek saal ki hai","source":"claude-written","tokens":"warranty ek saal ki hai","labels":"EN HI HI HI HI"}
+{"id":"e065","text":"thank you main sochkar bataunga","source":"claude-written","tokens":"thank you main sochkar bataunga","labels":"EN EN HI HI HI"}
+{"id":"e066","text":"delivery free hai kya","source":"claude-written","tokens":"delivery free hai kya","labels":"EN EN HI HI"}
+{"id":"e067","text":"yes I want to buy this","source":"claude-written","tokens":"yes I want to buy this","labels":"EN EN EN EN EN EN"}
+{"id":"e068","text":"kya main EMI par le sakta hoon","source":"claude-written","tokens":"kya main EMI par le sakta hoon","labels":"HI HI EN HI HI HI HI"}
+{"id":"e069","text":"kal aana store par","source":"claude-written","tokens":"kal aana store par","labels":"HI HI EN HI"}
+{"id":"e070","text":"honestly mujhe ye pasand nahi aaya","source":"claude-written","tokens":"honestly mujhe ye pasand nahi aaya","labels":"EN HI HI HI HI HI"}
+{"id":"e071","text":"mujhe kal ka appointment chahiye","source":"claude-written","tokens":"mujhe kal ka appointment chahiye","labels":"HI HI HI EN HI"}
+{"id":"e072","text":"doctor kab available hain","source":"claude-written","tokens":"doctor kab available hain","labels":"EN HI EN HI"}
+{"id":"e073","text":"kal Monday ko meeting hai","source":"claude-written","tokens":"kal Monday ko meeting hai","labels":"HI EN HI EN HI"}
+{"id":"e074","text":"kitne baje milna hai tumhe","source":"claude-written","tokens":"kitne baje milna hai tumhe","labels":"HI HI HI HI HI"}
+{"id":"e075","text":"main 5 baje aa jaunga","source":"claude-written","tokens":"main 5 baje aa jaunga","labels":"HI X HI HI HI"}
+{"id":"e076","text":"what time pe aana hai","source":"claude-written","tokens":"what time pe aana hai","labels":"EN EN HI HI HI"}
+{"id":"e077","text":"slot available hai kya","source":"claude-written","tokens":"slot available hai kya","labels":"EN EN HI HI"}
+{"id":"e078","text":"please reschedule kar do","source":"claude-written","tokens":"please reschedule kar do","labels":"EN EN HI HI"}
+{"id":"e079","text":"Rahul ne bola ki meeting cancel ho gayi","source":"claude-written","tokens":"Rahul ne bola ki meeting cancel ho gayi","labels":"X HI HI HI EN EN HI HI"}
+{"id":"e080","text":"Priya call me back please","source":"claude-written","tokens":"Priya call me back please","labels":"X EN EN EN EN"}
+{"id":"e081","text":"kal subah 10 baje theek rahega","source":"claude-written","tokens":"kal subah 10 baje theek rahega","labels":"HI HI X HI HI HI"}
+{"id":"e082","text":"aapko confirmation message mil gaya hoga","source":"claude-written","tokens":"aapko confirmation message mil gaya hoga","labels":"HI EN EN HI HI HI"}
+{"id":"e083","text":"haan ji main pahunch gaya","source":"claude-written","tokens":"haan ji main pahunch gaya","labels":"HI HI HI HI HI"}
+{"id":"e084","text":"I am running late sorry","source":"claude-written","tokens":"I am running late sorry","labels":"EN EN EN EN EN"}
+{"id":"e085","text":"wait karo main aa raha hoon","source":"claude-written","tokens":"wait karo main aa raha hoon","labels":"EN HI HI HI HI HI"}
+{"id":"e086","text":"can we meet kal","source":"claude-written","tokens":"can we meet kal","labels":"EN EN EN HI"}
+{"id":"e087","text":"office me milte hain","source":"claude-written","tokens":"office me milte hain","labels":"EN HI HI HI"}
+{"id":"e088","text":"wo meeting kal the na","source":"claude-written","tokens":"wo meeting kal the na","labels":"HI EN HI HI HI"}
+{"id":"e089","text":"Sneha ko bhi bulao","source":"claude-written","tokens":"Sneha ko bhi bulao","labels":"X HI HI HI"}
+{"id":"e090","text":"ok confirmed","source":"claude-written","tokens":"ok confirmed","labels":"X EN"}
+{"id":"e091","text":"yaar meeting kal hai","source":"claude-written","tokens":"yaar meeting kal hai","labels":"HI EN HI HI"}
+{"id":"e092","text":"hum log lunch pe chalte hain","source":"claude-written","tokens":"hum log lunch pe chalte hain","labels":"HI HI EN HI HI HI"}
+{"id":"e093","text":"arre wo to bahut easy hai","source":"claude-written","tokens":"arre wo to bahut easy hai","labels":"HI HI HI HI EN HI"}
+{"id":"e094","text":"ok so tomorrow ka plan kya hai","source":"claude-written","tokens":"ok so tomorrow ka plan kya hai","labels":"X EN EN HI EN HI HI"}
+{"id":"e095","text":"haha sach mein","source":"claude-written","tokens":"haha sach mein","labels":"X HI HI"}
+{"id":"e096","text":"bro kal milte hain","source":"claude-written","tokens":"bro kal milte hain","labels":"EN HI HI HI"}
+{"id":"e097","text":"mujhe bahut bhookh lagi hai","source":"claude-written","tokens":"mujhe bahut bhookh lagi hai","labels":"HI HI HI HI HI"}
+{"id":"e098","text":"chalo movie dekhte hain","source":"claude-written","tokens":"chalo movie dekhte hain","labels":"HI EN HI HI"}
+{"id":"e099","text":"kya scene hai aaj","source":"claude-written","tokens":"kya scene hai aaj","labels":"HI EN HI HI"}
+{"id":"e100","text":"mera mood off hai","source":"claude-written","tokens":"mera mood off hai","labels":"HI EN EN HI"}
+{"id":"e101","text":"tu kab aa raha hai","source":"claude-written","tokens":"tu kab aa raha hai","labels":"HI HI HI HI HI"}
+{"id":"e102","text":"bas ek coffee aur phir nikalte hain","source":"claude-written","tokens":"bas ek coffee aur phir nikalte hain","labels":"HI HI EN HI HI HI HI"}
+{"id":"e103","text":"Amit bhai kahan ho","source":"claude-written","tokens":"Amit bhai kahan ho","labels":"X HI HI HI"}
+{"id":"e104","text":"wow ye to amazing hai","source":"claude-written","tokens":"wow ye to amazing hai","labels":"X HI HI EN HI"}
+{"id":"e105","text":"you know kya hua","source":"claude-written","tokens":"you know kya hua","labels":"EN EN HI HI"}
+{"id":"e106","text":"He is coming tomorrow","source":"claude-written","tokens":"He is coming tomorrow","labels":"EN EN EN EN"}
+{"id":"e107","text":"I will check and tell you kal","source":"claude-written","tokens":"I will check and tell you kal","labels":"EN EN EN EN EN EN HI"}
+{"id":"e108","text":"are you free tonight","source":"claude-written","tokens":"are you free tonight","labels":"EN EN EN EN"}
+{"id":"e109","text":"seriously mujhe samajh nahi aaya","source":"claude-written","tokens":"seriously mujhe samajh nahi aaya","labels":"EN HI HI HI HI"}
+{"id":"e110","text":"aaj ka weather bahut accha hai","source":"claude-written","tokens":"aaj ka weather bahut accha hai","labels":"HI HI EN HI HI HI"}
+{"id":"e111","text":"kuch bhi bolo yaar","source":"claude-written","tokens":"kuch bhi bolo yaar","labels":"HI HI HI HI"}
+{"id":"e112","text":"sab theek hai na","source":"claude-written","tokens":"sab theek hai na","labels":"HI HI HI HI"}
+{"id":"e113","text":"cricket match dekha kya","source":"claude-written","tokens":"cricket match dekha kya","labels":"EN EN HI HI"}
+{"id":"e114","text":"I am hungry chalo khana khate hain","source":"claude-written","tokens":"I am hungry chalo khana khate hain","labels":"EN EN EN HI HI HI HI"}
+{"id":"e115","text":"mat jao wahan","source":"claude-written","tokens":"mat jao wahan","labels":"HI HI HI"}
+{"id":"e116","text":"put the mat here","source":"claude-written","tokens":"put the mat here","labels":"EN EN EN EN"}
+{"id":"e117","text":"thik hai main baad mein baat karta hoon","source":"claude-written","tokens":"thik hai main baad mein baat karta hoon","labels":"HI HI HI HI HI HI HI HI"}
+{"id":"e118","text":"bilkul sahi bola tumne","source":"claude-written","tokens":"bilkul sahi bola tumne","labels":"HI HI HI HI"}
+{"id":"e119","text":"oh no phone gir gaya","source":"claude-written","tokens":"oh no phone gir gaya","labels":"X EN EN HI HI"}
+{"id":"e120","text":"hmm maybe kal","source":"claude-written","tokens":"hmm maybe kal","labels":"X EN HI"}
+{"id":"e121","text":"kyaa aap kal aa sakte ho","source":"claude-written","tokens":"kyaa aap kal aa sakte ho","labels":"HI HI HI HI HI HI"}
+{"id":"e122","text":"nai yaar abhi nahi","source":"claude-written","tokens":"nai yaar abhi nahi","labels":"HI HI HI HI"}
+{"id":"e123","text":"mujhe timing ka pata nahin","source":"claude-written","tokens":"mujhe timing ka pata nahin","labels":"HI EN HI HI HI"}

@@ -42,6 +42,18 @@ aadha adha paune sawa sadhe pehla doosra dusra teesra
 namaste namaskar shukriya dhanyavaad dhanyawad maaf maafi alvida
 kuch kuchh koi kaafi kaafi sabhi sab saara sara poora pura har dono dusre doosre apas aapas
 khud sirf keval lagbhag takriban
+sakta sakti sakte sake saka sakenge sakunga sakungi sakoge sakogi
+aa mil milta milti milte milunga milungi milenge lag lagega lagegi lagenge
+jaunga jaungi jaoge jaogi jayenge bataunga bataungi batayega bataoge batayenge
+khati khaunga khaungi khayenge nikal nikalna nikalte nikalo nikla nikli nikalta
+pahunch pahunchna pahunchte pahunchunga pahunchi pahunche bula bulao bulana bulaya bulaiye
+wala wali wale baar kaat kaatna kaate kaati karni karne
+maine tumne sochkar karke dekhkar bolkar batakar sunkar lekar jakar aakar
+pasand baje baja bhookh bhook pyaas yahan wahan vahan yahaan wahaan
+gir girna gira girti girte rehna rehta rehti rehte rahunga rahungi
+puchna pucho poocha puchh samajhta samajhti sunta sunti jaanta jaanti jaanna janna
+shuru khatam dobara dubara firse wapas kabhi kuchh
+chahun chahunga chahenge bolega bolegi bologe bolenge
 `;
 
 export const HI_ROMAN: ReadonlySet<string> = new Set(WORDS.split(/\s+/).filter(Boolean));

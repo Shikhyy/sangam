@@ -1,0 +1,131 @@
+# One utterance per line. Each token is word=LABEL with H (Hindi), E (English) or X (name, number, filler).
+# Labelled by meaning, following data/eval/README.md, before looking at the tagger's output.
+# payments
+aapka=H EMI=E kal=H due=E hai=H
+mujhe=H salary=E kal=H tak=H mil=H jayegi=H
+payment=E abhi=H nahi=H ho=H raha=H hai=H
+ye=H wala=H amount=E galat=H lag=H raha=H hai=H
+main=H kal=H bank=E jaunga=H
+mera=H account=E balance=E kitna=H hai=H
+please=E mujhe=H ek=H reminder=E bhej=H do=H
+OTP=E nahi=H aaya=H abhi=H tak=H
+I=E will=E pay=E on=E Friday=E
+kal=H to=H main=H free=E hoon=H
+5000=X rupaye=H kaat=H liye=H gaye=H
+late=E fee=E kyun=H lagi=H
+aapka=H payment=E receive=E ho=H gaya=H hai=H
+thanks=E bhai=H ab=H sab=H theek=H hai=H
+mujhe=H EMI=E date=E change=E karni=H hai=H
+can=E you=E please=E ek=H baar=H phir=H se=H check=E karo=H
+loan=E ka=H interest=E kitna=H hai=H
+no=E problem=E main=H kal=H tak=H kar=H dunga=H
+card=E block=E ho=H gaya=H kya=H
+UPI=E se=H payment=E fail=E ho=H gaya=H
+# devanagari
+मुझे=H कल=H meeting=E में=H जाना=H है=H
+आपका=H payment=E due=E है=H
+मेरा=H order=E अभी=H तक=H नहीं=H आया=H
+मीटिंग=E कल=H सुबह=H है=H
+ये=H plan=E बहुत=H अच्छा=H है=H
+कृपया=H अपना=H OTP=E बताइए=H
+मैं=H office=E से=H बोल=H रहा=H हूँ=H
+डिलीवरी=E कब=H तक=H होगी=H
+धन्यवाद=H आपका=H दिन=H शुभ=H हो=H
+मुझे=H refund=E चाहिए=H
+# support
+mera=H phone=E charge=E nahi=H ho=H raha=H
+internet=E bahut=H slow=E chal=H raha=H hai=H
+app=E open=E hi=H nahi=H hota=H
+maine=H password=E reset=E kar=H diya=H
+error=E aa=H raha=H hai=H screen=E par=H
+sorry=E network=E issue=E tha=H
+aapki=H complaint=E register=E ho=H gayi=H hai=H
+ticket=E number=E kya=H hai=H
+hmm=X let=E me=E check=E karta=H hoon=H
+kya=H aap=H mujhe=H bata=H sakte=H ho=H
+my=E order=E kab=H aayega=H
+order=E cancel=E karna=H hai=H mujhe=H
+wo=H to=H bahut=H easy=E hai=H
+it=E is=E working=E fine=E now=E
+this=E is=E not=E working=E yaar=H
+server=E down=E hai=H shayad=H
+ek=H minute=E ruko=H
+aap=H ka=H number=E kya=H hai=H
+call=E me=E back=E please=E
+mujhe=H call=E karo=H jab=H free=E ho=H
+# sales
+ye=H plan=E kitne=H ka=H hai=H
+discount=E milega=H kya=H
+is=H month=E ka=H bill=E bahut=H zyada=H hai=H
+premium=E plan=E ke=H saath=H kya=H milta=H hai=H
+aap=H free=E trial=E try=E kar=H sakte=H hain=H
+price=E thoda=H kam=H karo=H na=H
+mujhe=H demo=E chahiye=H tomorrow=E
+kitna=H time=E lagega=H
+offer=E aaj=H tak=H hi=H hai=H
+ye=H product=E bahut=H popular=E hai=H
+I=E think=E kal=H tak=H ho=H jayega=H
+best=E deal=E hai=H bilkul=H
+aap=H quantity=E kitni=H lena=H chahte=H hain=H
+warranty=E ek=H saal=H ki=H hai=H
+thank=E you=E main=H sochkar=H bataunga=H
+delivery=E free=E hai=H kya=H
+yes=E I=E want=E to=E buy=E this=E
+kya=H main=H EMI=E par=H le=H sakta=H hoon=H
+kal=H aana=H store=E par=H
+honestly=E mujhe=H ye=H pasand=H nahi=H aaya=H
+# appointments
+mujhe=H kal=H ka=H appointment=E chahiye=H
+doctor=E kab=H available=E hain=H
+kal=H Monday=E ko=H meeting=E hai=H
+kitne=H baje=H milna=H hai=H tumhe=H
+main=H 5=X baje=H aa=H jaunga=H
+what=E time=E pe=H aana=H hai=H
+slot=E available=E hai=H kya=H
+please=E reschedule=E kar=H do=H
+Rahul=X ne=H bola=H ki=H meeting=E cancel=E ho=H gayi=H
+Priya=X call=E me=E back=E please=E
+kal=H subah=H 10=X baje=H theek=H rahega=H
+aapko=H confirmation=E message=E mil=H gaya=H hoga=H
+haan=H ji=H main=H pahunch=H gaya=H
+I=E am=E running=E late=E sorry=E
+wait=E karo=H main=H aa=H raha=H hoon=H
+can=E we=E meet=E kal=H
+office=E me=H milte=H hain=H
+wo=H meeting=E kal=H the=H na=H
+Sneha=X ko=H bhi=H bulao=H
+ok=X confirmed=E
+# casual
+yaar=H meeting=E kal=H hai=H
+hum=H log=H lunch=E pe=H chalte=H hain=H
+arre=H wo=H to=H bahut=H easy=E hai=H
+ok=X so=E tomorrow=E ka=H plan=E kya=H hai=H
+haha=X sach=H mein=H
+bro=E kal=H milte=H hain=H
+mujhe=H bahut=H bhookh=H lagi=H hai=H
+chalo=H movie=E dekhte=H hain=H
+kya=H scene=E hai=H aaj=H
+mera=H mood=E off=E hai=H
+tu=H kab=H aa=H raha=H hai=H
+bas=H ek=H coffee=E aur=H phir=H nikalte=H hain=H
+Amit=X bhai=H kahan=H ho=H
+wow=X ye=H to=H amazing=E hai=H
+you=E know=E kya=H hua=H
+He=E is=E coming=E tomorrow=E
+I=E will=E check=E and=E tell=E you=E kal=H
+are=E you=E free=E tonight=E
+seriously=E mujhe=H samajh=H nahi=H aaya=H
+aaj=H ka=H weather=E bahut=H accha=H hai=H
+kuch=H bhi=H bolo=H yaar=H
+sab=H theek=H hai=H na=H
+cricket=E match=E dekha=H kya=H
+I=E am=E hungry=E chalo=H khana=H khate=H hain=H
+mat=H jao=H wahan=H
+put=E the=E mat=E here=E
+thik=H hai=H main=H baad=H mein=H baat=H karta=H hoon=H
+bilkul=H sahi=H bola=H tumne=H
+oh=X no=E phone=E gir=H gaya=H
+hmm=X maybe=E kal=H
+kyaa=H aap=H kal=H aa=H sakte=H ho=H
+nai=H yaar=H abhi=H nahi=H
+mujhe=H timing=E ka=H pata=H nahin=H
