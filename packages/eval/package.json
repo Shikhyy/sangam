@@ -1,0 +1,10 @@
+{
+  "name": "@sangam/eval",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Evaluation harness for Sangam: tagger accuracy, ablations and annotator agreement.",
+  "dependencies": {
+    "@sangam/core": "workspace:*"
+  }
+}
