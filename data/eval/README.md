@@ -4,11 +4,13 @@ Labelled utterances for measuring the language tagger (experiment E1 in `docs/EV
 
 ## Files
 
-| File                | What it is                                                                                                                                           |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tagger.seed.jsonl` | 28 utterances **labelled by Claude** to test the harness. It includes cases the tagger is expected to miss. **Never report numbers from this file.** |
-| `tagger.jsonl`      | Your real labelled set (create it). The evaluation uses it when it exists.                                                                           |
-| `utterances.txt`    | Optional: raw utterances, one per line, before labelling.                                                                                            |
+| File                                             | What it is                                                                                                                                           |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tagger.seed.jsonl`                              | 28 utterances **labelled by Claude** to test the harness. It includes cases the tagger is expected to miss. **Never report numbers from this file.** |
+| `tagger.jsonl`                                   | Your real labelled set (create it). The evaluation uses it when it exists.                                                                           |
+| `tagger.src.txt`, `tagger.jsonl`                 | The 123 utterance development set (word=LABEL source, and the JSONL built from it with `pnpm eval:build`). Labelled by Claude.                       |
+| `tagger.heldout.src.txt`, `tagger.heldout.jsonl` | The 69 utterance held-out test set, written after the word list was extended. Never tuned on. Results are in `docs/RESULTS.md`.                      |
+| `utterances.txt`                                 | Optional: raw utterances, one per line, before labelling.                                                                                            |
 
 Real data comes from volunteers (with consent), your own writing, or generated text. Record which in `source`. Generated text is cleaner than real speech, so keep the mix visible. Use synthetic or consented data only. No names of real people, phone numbers, account numbers or recorded calls.
 

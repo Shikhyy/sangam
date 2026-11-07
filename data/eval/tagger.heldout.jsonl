@@ -1,0 +1,69 @@
+{"id":"e001","text":"mujhe laga tha ki train time par aayegi","source":"claude-written-heldout","tokens":"mujhe laga tha ki train time par aayegi","labels":"HI HI HI HI EN EN HI HI"}
+{"id":"e002","text":"kal subah gym jaana hai kya","source":"claude-written-heldout","tokens":"kal subah gym jaana hai kya","labels":"HI HI EN HI HI HI"}
+{"id":"e003","text":"bhaiya ek extra chai dena please","source":"claude-written-heldout","tokens":"bhaiya ek extra chai dena please","labels":"HI HI EN HI HI EN"}
+{"id":"e004","text":"ye laptop bahut heavy hai","source":"claude-written-heldout","tokens":"ye laptop bahut heavy hai","labels":"HI EN HI EN HI"}
+{"id":"e005","text":"wifi password kya hai yahan ka","source":"claude-written-heldout","tokens":"wifi password kya hai yahan ka","labels":"EN EN HI HI HI HI"}
+{"id":"e006","text":"mere phone ki battery jaldi khatam ho jaati hai","source":"claude-written-heldout","tokens":"mere phone ki battery jaldi khatam ho jaati hai","labels":"HI EN HI EN HI HI HI HI HI"}
+{"id":"e007","text":"Neha ne mujhe invoice bheja tha","source":"claude-written-heldout","tokens":"Neha ne mujhe invoice bheja tha","labels":"X HI HI EN HI HI"}
+{"id":"e008","text":"please mujhe ek receipt email kar dijiye","source":"claude-written-heldout","tokens":"please mujhe ek receipt email kar dijiye","labels":"EN HI HI EN EN HI HI"}
+{"id":"e009","text":"shaam ko hum park jayenge","source":"claude-written-heldout","tokens":"shaam ko hum park jayenge","labels":"HI HI HI EN HI"}
+{"id":"e010","text":"thoda sa spicy khana chahiye","source":"claude-written-heldout","tokens":"thoda sa spicy khana chahiye","labels":"HI HI EN HI HI"}
+{"id":"e011","text":"kya tum sach mein interview ke liye ready ho","source":"claude-written-heldout","tokens":"kya tum sach mein interview ke liye ready ho","labels":"HI HI HI HI EN HI HI EN HI"}
+{"id":"e012","text":"I called you but tumne phone nahi uthaya","source":"claude-written-heldout","tokens":"I called you but tumne phone nahi uthaya","labels":"EN EN EN EN HI EN HI HI"}
+{"id":"e013","text":"the report is ready","source":"claude-written-heldout","tokens":"the report is ready","labels":"EN EN EN EN"}
+{"id":"e014","text":"usne bola ki deadline kal hai","source":"claude-written-heldout","tokens":"usne bola ki deadline kal hai","labels":"HI HI HI EN HI HI"}
+{"id":"e015","text":"mera flight cancel ho gaya","source":"claude-written-heldout","tokens":"mera flight cancel ho gaya","labels":"HI EN EN HI HI"}
+{"id":"e016","text":"how much paisa lagega","source":"claude-written-heldout","tokens":"how much paisa lagega","labels":"EN EN HI HI"}
+{"id":"e017","text":"yaar ye traffic to bahut zyada hai","source":"claude-written-heldout","tokens":"yaar ye traffic to bahut zyada hai","labels":"HI HI EN HI HI HI HI"}
+{"id":"e018","text":"mujhe nahi lagta ki ye idea chalega","source":"claude-written-heldout","tokens":"mujhe nahi lagta ki ye idea chalega","labels":"HI HI HI HI HI EN HI"}
+{"id":"e019","text":"aapka parcel kal deliver hoga","source":"claude-written-heldout","tokens":"aapka parcel kal deliver hoga","labels":"HI EN HI EN HI"}
+{"id":"e020","text":"can I get a refund please","source":"claude-written-heldout","tokens":"can I get a refund please","labels":"EN EN EN EN EN EN"}
+{"id":"e021","text":"doosra option kya hai","source":"claude-written-heldout","tokens":"doosra option kya hai","labels":"HI EN HI HI"}
+{"id":"e022","text":"main apna laptop leke aaunga","source":"claude-written-heldout","tokens":"main apna laptop leke aaunga","labels":"HI HI EN HI HI"}
+{"id":"e023","text":"oh great ab kya karein","source":"claude-written-heldout","tokens":"oh great ab kya karein","labels":"X EN HI HI HI"}
+{"id":"e024","text":"Rohit bhai ne party rakhi hai","source":"claude-written-heldout","tokens":"Rohit bhai ne party rakhi hai","labels":"X HI HI EN HI HI"}
+{"id":"e025","text":"bahut time ho gaya hai","source":"claude-written-heldout","tokens":"bahut time ho gaya hai","labels":"HI EN HI HI HI"}
+{"id":"e026","text":"ye shirt mujhe fit nahi hoti","source":"claude-written-heldout","tokens":"ye shirt mujhe fit nahi hoti","labels":"HI EN HI EN HI HI"}
+{"id":"e027","text":"dukaan band ho gayi thi","source":"claude-written-heldout","tokens":"dukaan band ho gayi thi","labels":"HI EN HI HI HI"}
+{"id":"e028","text":"mujhe lagta hai wo busy hai","source":"claude-written-heldout","tokens":"mujhe lagta hai wo busy hai","labels":"HI HI HI HI EN HI"}
+{"id":"e029","text":"what happened kal raat ko","source":"claude-written-heldout","tokens":"what happened kal raat ko","labels":"EN EN HI HI HI"}
+{"id":"e030","text":"yahan signal nahi aa raha","source":"claude-written-heldout","tokens":"yahan signal nahi aa raha","labels":"HI EN HI HI HI"}
+{"id":"e031","text":"please apna name aur number likhiye","source":"claude-written-heldout","tokens":"please apna name aur number likhiye","labels":"EN HI EN HI EN HI"}
+{"id":"e032","text":"kal se exam hain","source":"claude-written-heldout","tokens":"kal se exam hain","labels":"HI HI EN HI"}
+{"id":"e033","text":"tu ghar pahunch gaya kya","source":"claude-written-heldout","tokens":"tu ghar pahunch gaya kya","labels":"HI HI HI HI HI"}
+{"id":"e034","text":"the price is too high","source":"claude-written-heldout","tokens":"the price is too high","labels":"EN EN EN EN EN"}
+{"id":"e035","text":"mujhe thoda sa time aur chahiye","source":"claude-written-heldout","tokens":"mujhe thoda sa time aur chahiye","labels":"HI HI HI EN HI HI"}
+{"id":"e036","text":"dekho main serious hoon","source":"claude-written-heldout","tokens":"dekho main serious hoon","labels":"HI HI EN HI"}
+{"id":"e037","text":"meeting ka agenda bhej do","source":"claude-written-heldout","tokens":"meeting ka agenda bhej do","labels":"EN HI EN HI HI"}
+{"id":"e038","text":"hum log weekend par trip plan kar rahe hain","source":"claude-written-heldout","tokens":"hum log weekend par trip plan kar rahe hain","labels":"HI HI EN HI EN EN HI HI HI"}
+{"id":"e039","text":"aaj office mein bahut kaam tha","source":"claude-written-heldout","tokens":"aaj office mein bahut kaam tha","labels":"HI EN HI HI HI HI"}
+{"id":"e040","text":"subah se mera head dard kar raha hai","source":"claude-written-heldout","tokens":"subah se mera head dard kar raha hai","labels":"HI HI HI EN HI HI HI HI"}
+{"id":"e041","text":"tumhara project kaisa chal raha hai","source":"claude-written-heldout","tokens":"tumhara project kaisa chal raha hai","labels":"HI EN HI HI HI HI"}
+{"id":"e042","text":"sorry mujhe aane mein late ho gaya","source":"claude-written-heldout","tokens":"sorry mujhe aane mein late ho gaya","labels":"EN HI HI HI EN HI HI"}
+{"id":"e043","text":"good morning sir aapka order ready hai","source":"claude-written-heldout","tokens":"good morning sir aapka order ready hai","labels":"EN EN EN HI EN EN HI"}
+{"id":"e044","text":"password bhool gaya main","source":"claude-written-heldout","tokens":"password bhool gaya main","labels":"EN HI HI HI"}
+{"id":"e045","text":"Sneha ko message kar diya","source":"claude-written-heldout","tokens":"Sneha ko message kar diya","labels":"X HI EN HI HI"}
+{"id":"e046","text":"kitne baje tak open rehta hai","source":"claude-written-heldout","tokens":"kitne baje tak open rehta hai","labels":"HI HI HI EN HI HI"}
+{"id":"e047","text":"mujhe lagta hai price thoda high hai","source":"claude-written-heldout","tokens":"mujhe lagta hai price thoda high hai","labels":"HI HI HI EN HI EN HI"}
+{"id":"e048","text":"ye item out of stock hai","source":"claude-written-heldout","tokens":"ye item out of stock hai","labels":"HI EN EN EN EN HI"}
+{"id":"e049","text":"don't worry sab theek ho jayega","source":"claude-written-heldout","tokens":"don't worry sab theek ho jayega","labels":"EN EN HI HI HI HI"}
+{"id":"e050","text":"tumhe kaun sa colour pasand hai","source":"claude-written-heldout","tokens":"tumhe kaun sa colour pasand hai","labels":"HI HI HI EN HI HI"}
+{"id":"e051","text":"wo log kal shaadi mein gaye","source":"claude-written-heldout","tokens":"wo log kal shaadi mein gaye","labels":"HI HI HI HI HI HI"}
+{"id":"e052","text":"mere paas change nahi hai","source":"claude-written-heldout","tokens":"mere paas change nahi hai","labels":"HI HI EN HI HI"}
+{"id":"e053","text":"I love this song bahut achha hai","source":"claude-written-heldout","tokens":"I love this song bahut achha hai","labels":"EN EN EN EN HI HI HI"}
+{"id":"e054","text":"kal presentation hai aur slides ready nahi hain","source":"claude-written-heldout","tokens":"kal presentation hai aur slides ready nahi hain","labels":"HI EN HI HI EN EN HI HI"}
+{"id":"e055","text":"mummy ne bola ki dinner par aana","source":"claude-written-heldout","tokens":"mummy ne bola ki dinner par aana","labels":"HI HI HI HI EN HI HI"}
+{"id":"e056","text":"aapka flight ka gate change ho gaya hai","source":"claude-written-heldout","tokens":"aapka flight ka gate change ho gaya hai","labels":"HI EN HI EN EN HI HI HI"}
+{"id":"e057","text":"mujhe apna login ID yaad nahi hai","source":"claude-written-heldout","tokens":"mujhe apna login ID yaad nahi hai","labels":"HI HI EN EN HI HI HI"}
+{"id":"e058","text":"please thoda slowly boliye","source":"claude-written-heldout","tokens":"please thoda slowly boliye","labels":"EN HI EN HI"}
+{"id":"e059","text":"kya ye laptop warranty mein hai","source":"claude-written-heldout","tokens":"kya ye laptop warranty mein hai","labels":"HI HI EN EN HI HI"}
+{"id":"e060","text":"ruko main check karta hoon","source":"claude-written-heldout","tokens":"ruko main check karta hoon","labels":"HI HI EN HI HI"}
+{"id":"e061","text":"good idea yaar karte hain","source":"claude-written-heldout","tokens":"good idea yaar karte hain","labels":"EN EN HI HI HI"}
+{"id":"e062","text":"kal ka match kaun jeeta","source":"claude-written-heldout","tokens":"kal ka match kaun jeeta","labels":"HI HI EN HI HI"}
+{"id":"e063","text":"aaj raat ko movie dekhein","source":"claude-written-heldout","tokens":"aaj raat ko movie dekhein","labels":"HI HI HI EN HI"}
+{"id":"e064","text":"tumne food order kiya kya","source":"claude-written-heldout","tokens":"tumne food order kiya kya","labels":"HI EN EN HI HI"}
+{"id":"e065","text":"mujhe aaj leave chahiye","source":"claude-written-heldout","tokens":"mujhe aaj leave chahiye","labels":"HI HI EN HI"}
+{"id":"e066","text":"the driver is outside","source":"claude-written-heldout","tokens":"the driver is outside","labels":"EN EN EN EN"}
+{"id":"e067","text":"iska price kya hai","source":"claude-written-heldout","tokens":"iska price kya hai","labels":"HI EN HI HI"}
+{"id":"e068","text":"bhai ek selfie lena","source":"claude-written-heldout","tokens":"bhai ek selfie lena","labels":"HI HI EN HI"}
+{"id":"e069","text":"sir mera salary slip chahiye","source":"claude-written-heldout","tokens":"sir mera salary slip chahiye","labels":"EN HI EN EN HI"}

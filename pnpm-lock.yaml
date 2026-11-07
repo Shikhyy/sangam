@@ -59,6 +59,9 @@ importers:
       '@sangam/core':
         specifier: workspace:*
         version: link:../core
+      '@sangam/llm':
+        specifier: workspace:*
+        version: link:../llm
 
   packages/llm:
     dependencies:

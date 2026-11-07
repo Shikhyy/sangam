@@ -1,0 +1,71 @@
+# Held-out test set. Written and labelled after the lexicon was extended from the development set,
+# by meaning, without looking at the tagger's output. Never tuned on.
+mujhe=H laga=H tha=H ki=H train=E time=E par=H aayegi=H
+kal=H subah=H gym=E jaana=H hai=H kya=H
+bhaiya=H ek=H extra=E chai=H dena=H please=E
+ye=H laptop=E bahut=H heavy=E hai=H
+wifi=E password=E kya=H hai=H yahan=H ka=H
+mere=H phone=E ki=H battery=E jaldi=H khatam=H ho=H jaati=H hai=H
+Neha=X ne=H mujhe=H invoice=E bheja=H tha=H
+please=E mujhe=H ek=H receipt=E email=E kar=H dijiye=H
+shaam=H ko=H hum=H park=E jayenge=H
+thoda=H sa=H spicy=E khana=H chahiye=H
+kya=H tum=H sach=H mein=H interview=E ke=H liye=H ready=E ho=H
+I=E called=E you=E but=E tumne=H phone=E nahi=H uthaya=H
+the=E report=E is=E ready=E
+usne=H bola=H ki=H deadline=E kal=H hai=H
+mera=H flight=E cancel=E ho=H gaya=H
+how=E much=E paisa=H lagega=H
+yaar=H ye=H traffic=E to=H bahut=H zyada=H hai=H
+mujhe=H nahi=H lagta=H ki=H ye=H idea=E chalega=H
+aapka=H parcel=E kal=H deliver=E hoga=H
+can=E I=E get=E a=E refund=E please=E
+doosra=H option=E kya=H hai=H
+main=H apna=H laptop=E leke=H aaunga=H
+oh=X great=E ab=H kya=H karein=H
+Rohit=X bhai=H ne=H party=E rakhi=H hai=H
+bahut=H time=E ho=H gaya=H hai=H
+ye=H shirt=E mujhe=H fit=E nahi=H hoti=H
+dukaan=H band=E ho=H gayi=H thi=H
+mujhe=H lagta=H hai=H wo=H busy=E hai=H
+what=E happened=E kal=H raat=H ko=H
+yahan=H signal=E nahi=H aa=H raha=H
+please=E apna=H name=E aur=H number=E likhiye=H
+kal=H se=H exam=E hain=H
+tu=H ghar=H pahunch=H gaya=H kya=H
+the=E price=E is=E too=E high=E
+mujhe=H thoda=H sa=H time=E aur=H chahiye=H
+dekho=H main=H serious=E hoon=H
+meeting=E ka=H agenda=E bhej=H do=H
+hum=H log=H weekend=E par=H trip=E plan=E kar=H rahe=H hain=H
+aaj=H office=E mein=H bahut=H kaam=H tha=H
+subah=H se=H mera=H head=E dard=H kar=H raha=H hai=H
+tumhara=H project=E kaisa=H chal=H raha=H hai=H
+sorry=E mujhe=H aane=H mein=H late=E ho=H gaya=H
+good=E morning=E sir=E aapka=H order=E ready=E hai=H
+password=E bhool=H gaya=H main=H
+Sneha=X ko=H message=E kar=H diya=H
+kitne=H baje=H tak=H open=E rehta=H hai=H
+mujhe=H lagta=H hai=H price=E thoda=H high=E hai=H
+ye=H item=E out=E of=E stock=E hai=H
+don't=E worry=E sab=H theek=H ho=H jayega=H
+tumhe=H kaun=H sa=H colour=E pasand=H hai=H
+wo=H log=H kal=H shaadi=H mein=H gaye=H
+mere=H paas=H change=E nahi=H hai=H
+I=E love=E this=E song=E bahut=H achha=H hai=H
+kal=H presentation=E hai=H aur=H slides=E ready=E nahi=H hain=H
+mummy=H ne=H bola=H ki=H dinner=E par=H aana=H
+aapka=H flight=E ka=H gate=E change=E ho=H gaya=H hai=H
+mujhe=H apna=H login=E ID=E yaad=H nahi=H hai=H
+please=E thoda=H slowly=E boliye=H
+kya=H ye=H laptop=E warranty=E mein=H hai=H
+ruko=H main=H check=E karta=H hoon=H
+good=E idea=E yaar=H karte=H hain=H
+kal=H ka=H match=E kaun=H jeeta=H
+aaj=H raat=H ko=H movie=E dekhein=H
+tumne=H food=E order=E kiya=H kya=H
+mujhe=H aaj=H leave=E chahiye=H
+the=E driver=E is=E outside=E
+iska=H price=E kya=H hai=H
+bhai=H ek=H selfie=E lena=H
+sir=E mera=H salary=E slip=E chahiye=H

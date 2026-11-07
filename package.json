@@ -14,6 +14,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p packages/core/tsconfig.json && tsc --noEmit -p packages/llm/tsconfig.json && tsc --noEmit -p packages/speech/tsconfig.json && tsc --noEmit -p packages/eval/tsconfig.json && tsc --noEmit -p apps/web/tsconfig.json",
     "eval:tagger": "tsx packages/eval/src/tagger-eval.ts",
+    "eval:mirror": "tsx packages/eval/src/mirror.ts",
+    "eval:build": "tsx packages/eval/src/build.ts",
     "eval:draft": "tsx packages/eval/src/draft.ts",
     "eval:agreement": "tsx packages/eval/src/agreement.ts",
     "lint": "biome check .",
