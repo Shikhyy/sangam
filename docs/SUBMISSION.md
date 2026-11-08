@@ -4,16 +4,16 @@ Deadline: **Tue 10 Nov 2026, 11:59 PM IST.** Aim to submit by the afternoon of t
 
 ## Status
 
-| Item                                      | State                                                                                             |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Working app, live                         | Done: https://sangam-voice.vercel.app                                                             |
-| Public code                               | Done: https://github.com/Shikhyy/sangam (public, MIT)                                             |
-| Written project explanation               | Draft below. Add your name and check every claim                                                  |
-| Demo video                                | Pipeline built and rehearsed. **Final take needs live replies** (see "Recording the final video") |
-| Nominated post, LinkedIn and/or X         | Draft below. **You post it**, with the two hashtags, before submitting                            |
-| Eligibility (Indian college, 18 or older) | **You confirm**                                                                                   |
-| Keys rotated                              | **You do this.** The OpenRouter and Gnani keys were printed earlier in a chat                     |
-| Microphone tested on a real phone         | **Not done.** Do it on the live site before you record or post                                    |
+| Item                                      | State                                                                                                                                                                                                                          |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Working app, live                         | Done: https://sangam-voice.vercel.app                                                                                                                                                                                          |
+| Public code                               | Done: https://github.com/Shikhyy/sangam (public, MIT)                                                                                                                                                                          |
+| Written project explanation               | Draft below. Add your name and check every claim                                                                                                                                                                               |
+| Demo video                                | **Recorded** on 8 Nov: `demo/out/sangam-demo.mp4`, 62 s, with live replies from the free models and the real Gnani Timbre voice. **Watch it all the way through before you post it**, then upload it publicly and add the link |
+| Nominated post, LinkedIn and/or X         | Draft below. **You post it**, with the two hashtags, before submitting                                                                                                                                                         |
+| Eligibility (Indian college, 18 or older) | **You confirm**                                                                                                                                                                                                                |
+| Keys rotated                              | **You do this.** The OpenRouter and Gnani keys were printed earlier in a chat                                                                                                                                                  |
+| Microphone tested on a real phone         | **Not done.** Do it on the live site before you record or post                                                                                                                                                                 |
 
 ## Project explanation (paste into the form)
 
@@ -91,12 +91,14 @@ What's your Hinglish? Reply with a sentence and I'll tell you how you mix.
 
 | When              | What                                                                                                                                                 |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sat 7 Nov (today) | Test the microphone on your phone. Rotate the keys. Optional teaser: "Send me one sentence in your normal Hinglish and I'll tell you how you mix."   |
-| Sun 8 Nov         | After the free model quota resets (about 05:30 IST), record the final video, upload it publicly, and run `pnpm eval:mirror` to finish the experiment |
+| Sat 7 Nov         | Test the microphone on your phone. Rotate the keys. Optional teaser: "Send me one sentence in your normal Hinglish and I'll tell you how you mix."   |
+| Sun 8 Nov (today) | Watch the demo video, upload it publicly, and test the microphone on your phone. Run `pnpm eval:mirror` to finish the experiment if the models allow |
 | Mon 9 Nov         | Publish the main post (the one you nominate) with the video. Reply to people who send a sentence                                                     |
 | Tue 10 Nov        | Thank-you reply with the results page. Check every link, then submit by the afternoon                                                                |
 
-## Recording the final video
+## How the final video was made (and how to redo it)
+
+The video was recorded on 8 Nov against the live models. The voice-over is Microsoft Edge text to speech (`en-IN-NeerjaNeural`), and the reply you hear spoken is Gnani Timbre reading the real reply. Say so if asked. To redo it:
 
 The pipeline is in [`demo/`](../demo/README.md). It drives the real app in headless Chrome, mixes an Indian-English Edge TTS voice-over with the Gnani Timbre voice speaking the real reply, and burns in captions. A rehearsal with scripted replies has been run to prove it works; **a rehearsal is never to be submitted**, and the script refuses to make a final take unless the app is live.
 
@@ -108,7 +110,7 @@ ANGLE=metal node demo/record.mjs          # needs the free models to answer
 node demo/build.mjs                       # demo/out/sangam-demo.mp4
 ```
 
-If `record.mjs` says "No replies", the free models are busy: try again later. The finished file is in `demo/out/` and is not committed to git (it is large). Upload it publicly (for example on YouTube or directly in the post), and add the link above.
+If `record.mjs` says "No replies after several tries", the free models are busy: try again later. The finished file is in `demo/out/` and is not committed to git (it is large). Upload it publicly (for example on YouTube or directly in the post), and add the link above.
 
 ## Before you press submit
 
