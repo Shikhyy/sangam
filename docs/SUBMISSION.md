@@ -49,19 +49,23 @@ Deadline: **Tue 10 Nov 2026, 11:59 PM IST.** Aim to submit by the afternoon of t
 
 Post on the platform(s) you nominate, live before you submit. Include **#GnaniAI** and **#GreatIndianAIInternshipChallenge**. Tagging Gnani alone does not count. Engagement must be genuine: no bots, swaps, paid promotion or asking friends to trade likes. Say what is true; do not claim users prefer it, because that has not been tested.
 
-### X (about 270 characters with the link counted as 23)
+### X (249 characters with the link counted as 23)
+
+Gnani's page requires the exact hashtags `#GreatIndianAIInternshipChallenge` and `#GnaniAI`, a tag of Gnani AI, and the post must show a video of the app working, what you built and the Gnani technology used. Attach `demo/out/sangam-demo.mp4` to this post.
 
 ```
-Voice agents talk like textbooks. You don't.
+I built Sangam: a voice agent that talks like you.
 
-Sangam measures how you really mix Hindi and English, then replies in your mix. Gnani Prisma listens, Timbre speaks.
+It measures how you mix Hindi and English, then replies in your mix. Gnani Prisma listens, Gnani Timbre speaks.
 
-What's your Hinglish? https://sangam-voice.vercel.app/card
+Try it: https://sangam-voice.vercel.app
 
-#GnaniAI #GreatIndianAIInternshipChallenge
+@GnaniAi #GnaniAI #GreatIndianAIInternshipChallenge
 ```
 
-Attach the demo video. Reply to your own post with the repo link and the results page.
+Check that `@GnaniAi` is the right handle before posting (Gnani's page links to x.com/GnaniAi). Reply to your own post with the repo link https://github.com/Shikhyy/sangam and the results page.
+
+**Project URL.** Use the GitHub link https://github.com/Shikhyy/sangam. The one-page pitch Gnani asks for is [PITCH.md](../PITCH.md) at the top of the repo and linked first in the README.
 
 ### LinkedIn
 

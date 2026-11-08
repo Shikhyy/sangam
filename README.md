@@ -7,7 +7,7 @@
 Sangam measures how a person mixes Hindi and English, then keeps an agent's replies in the same mix.
 Built on Gnani's Prisma speech recognition and Timbre voice for the Great Indian AI Internship Challenge.
 
-[**Live demo**](https://sangam-voice.vercel.app) · [Playground](https://sangam-voice.vercel.app/playground) · [Docs](https://sangam-voice.vercel.app/docs) · [Results](https://sangam-voice.vercel.app/results)
+[**One-page pitch**](PITCH.md) · [**Live demo**](https://sangam-voice.vercel.app) · [Playground](https://sangam-voice.vercel.app/playground) · [Docs](https://sangam-voice.vercel.app/docs) · [Results](https://sangam-voice.vercel.app/results)
 
 ![Sangam home page](docs/images/home.png)
 
