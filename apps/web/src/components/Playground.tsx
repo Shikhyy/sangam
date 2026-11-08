@@ -180,9 +180,14 @@ export function Playground() {
     [register, script, maxSentences],
   );
 
+  // Each press of Get replies is a new run. A stream from an older run must never write into the page again.
+  const run = useRef(0);
+
   const send = useCallback(async () => {
     const message = text.trim();
     if (!message || replies.status === "loading") return;
+    const mine = ++run.current;
+    const current = () => run.current === mine;
 
     setNotice(null);
     const nextHistory: Turn[] = [...history, { role: "user", text: message }];
@@ -191,8 +196,9 @@ export function Playground() {
 
     try {
       const [typical, sangam] = await Promise.all([
-        requestReply({ mode: "typical", history: nextHistory, persona }, (partial) =>
-          setReplies((r) => ({ ...r, typical: { ...r.typical, text: partial } })),
+        requestReply(
+          { mode: "typical", history: nextHistory, persona },
+          (partial) => current() && setReplies((r) => ({ ...r, typical: { ...r.typical, text: partial } })),
         ),
         requestReply(
           {
@@ -202,16 +208,17 @@ export function Playground() {
             guidance: guidance.promptFragment,
             targetHindiShare: guidance.target.hindiShare,
           },
-          (partial) => setReplies((r) => ({ ...r, sangam: { ...r.sangam, text: partial } })),
+          (partial) => current() && setReplies((r) => ({ ...r, sangam: { ...r.sangam, text: partial } })),
         ),
       ]);
 
-      const mine = {
+      if (!current()) return;
+      const target = {
         hindiShare: profile.hindiShare,
         switchRate: profile.switchRate,
         matrixLanguage: profile.matrixLanguage,
       };
-      const gap = (reply: string) => Math.round(check(reply, mine).deltaHindiShare * 100);
+      const gap = (reply: string) => Math.round(check(reply, target).deltaHindiShare * 100);
       setReplies({
         status: "done",
         provider: sangam.provider,
@@ -221,6 +228,7 @@ export function Playground() {
       });
       setHistory([...nextHistory, { role: "assistant", text: sangam.text }]);
     } catch (error) {
+      if (!current()) return;
       setReplies((r) => ({
         ...r,
         status: "error",

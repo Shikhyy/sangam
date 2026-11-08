@@ -54,7 +54,7 @@ export function textOfLine(line: string): string | null {
   return typeof content === "string" && content.length > 0 ? content : null;
 }
 
-/** How much of a reply is read before deciding it is a real answer and not the model thinking aloud. */
+/** How much of the start of a reply is looked at to tell a real answer from the model thinking aloud. */
 const HEAD_CHARS = 80;
 
 /**
@@ -68,29 +68,14 @@ export function isLeakedReasoning(text: string): boolean {
   );
 }
 
-/** Holds back the start of a reply until it has been checked, then lets everything through. */
-function headGate(model: string) {
-  let head = "";
-  let held: string[] = [];
-  let open = false;
-  const release = () => {
-    if (isLeakedReasoning(head)) throw new LlmUnavailableError(`${model} sent its reasoning instead of a reply`);
-    open = true;
-    const out = held;
-    held = [];
-    return out;
-  };
-  return {
-    push(text: string): string[] {
-      if (open) return [text];
-      head += text;
-      held.push(text);
-      return head.length >= HEAD_CHARS ? release() : [];
-    },
-    finish(): string[] {
-      return open || held.length === 0 ? [] : release();
-    },
-  };
+/**
+ * Free models sometimes send the same reply twice in one stream. If the text is two identical halves, keep one.
+ */
+export function withoutRepeat(text: string): string {
+  const trimmed = text.trim();
+  const mid = Math.floor(trimmed.length / 2);
+  const first = trimmed.slice(0, mid).trim();
+  return first.length >= 20 && first === trimmed.slice(mid).trim() ? first : trimmed;
 }
 
 /** Statuses that mean "this model is busy or broken, try the next one". */
@@ -133,7 +118,6 @@ export class OpenRouterProvider implements LlmProvider {
 
     let lastError: Error = new LlmUnavailableError("No free model answered");
     for (const model of this.models) {
-      let spoke = false;
       try {
         const response = await this.fetchImpl(OPENROUTER_URL, {
           method: "POST",
@@ -158,41 +142,35 @@ export class OpenRouterProvider implements LlmProvider {
         }
         if (!response.body) throw new LlmUnavailableError(`OpenRouter sent no body for ${model}`, response.status);
 
-        const gate = headGate(model);
+        // Replies are a sentence or two, so read the whole answer first. That lets a reply that leaked the model's
+        // reasoning, repeated itself or stopped halfway be dropped and the next model tried, before the person sees it.
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
+        let full = "";
         for (let chunk = await reader.read(); !chunk.done; chunk = await reader.read()) {
           buffer += decoder.decode(chunk.value, { stream: true });
           let newline = buffer.indexOf("\n");
           while (newline !== -1) {
-            const text = textOfLine(buffer.slice(0, newline).trim());
+            full += textOfLine(buffer.slice(0, newline).trim()) ?? "";
             buffer = buffer.slice(newline + 1);
-            if (text) {
-              for (const piece of gate.push(text)) {
-                spoke = true;
-                yield piece;
-              }
-            }
             newline = buffer.indexOf("\n");
           }
         }
-        const rest = textOfLine(buffer.trim());
-        if (rest) {
-          for (const piece of gate.push(rest)) {
-            spoke = true;
-            yield piece;
-          }
+        full += textOfLine(buffer.trim()) ?? "";
+
+        const reply = withoutRepeat(full);
+        if (reply && isLeakedReasoning(reply)) {
+          lastError = new LlmUnavailableError(`${model} sent its reasoning instead of a reply`);
+          continue;
         }
-        for (const piece of gate.finish()) {
-          spoke = true;
-          yield piece;
+        if (reply) {
+          yield reply;
+          return;
         }
-        if (spoke) return;
         lastError = new LlmUnavailableError(`${model} returned an empty reply`);
       } catch (error) {
         if (request.signal?.aborted) throw error;
-        if (spoke) throw error;
         if (error instanceof DOMException && (error.name === "TimeoutError" || error.name === "AbortError")) {
           lastError = new LlmUnavailableError(`${model} took too long to answer`);
           continue;

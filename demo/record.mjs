@@ -212,31 +212,56 @@ await until("s2");
 // s3: ask for both replies. Waiting for the model is cut out of the video, so the replies are already there
 // when the narration reaches them.
 meta.cuts = [];
-await clickBy(`[...document.querySelectorAll("button")].find((b) => b.textContent.includes("Get replies"))`);
+// A short reply keeps the Gnani voice short too, and shows the length setting.
+await clickBy(`[...document.querySelectorAll("button")].find((b) => b.textContent.trim() === "1 sentence")`);
+await sleep(400);
+const askForReplies = () =>
+  clickBy(`[...document.querySelectorAll("button")].find((b) => b.textContent.includes("Get replies"))`);
+await askForReplies();
 await sleep(500);
 const cutFrom = Date.now() / 1000 + (clockOffset ?? 0);
-const deadline = Date.now() + 90_000;
+// The free models are shared and often busy, so ask again a few times. Waiting is cut out of the video.
 let replies = null;
-while (Date.now() < deadline) {
-  await sleep(700);
-  replies = await js(
-    `(() => { const t = [...document.querySelectorAll(".reply-text")].map((e) => e.textContent.trim()); const err = document.querySelector('[role="alert"]'); return { t, err: err ? err.textContent : null }; })()`,
-  );
-  if (replies.err) break;
-  if (replies.t.length === 2 && replies.t.every((text) => text.length > 25)) break;
+let lastSeen = "";
+let steady = 0;
+for (let attempt = 1; attempt <= 12; attempt++) {
+  const deadline = Date.now() + 60_000;
+  steady = 0;
+  lastSeen = "";
+  while (Date.now() < deadline) {
+    await sleep(700);
+    replies = await js(
+      `(() => { const t = [...document.querySelectorAll(".reply-text")].map((e) => e.textContent.trim()); const err = document.querySelector('[role="alert"]'); return { t, err: err ? err.textContent : null }; })()`,
+    );
+    if (replies.err) break;
+    // Replies stream in, so wait until both have stopped changing before using them.
+    const whole = replies.t.length === 2 && replies.t.every((text) => text.length > 25);
+    const same = whole && replies.t.join("\u0000") === lastSeen;
+    steady = same ? steady + 1 : 0;
+    lastSeen = whole ? replies.t.join("\u0000") : "";
+    if (steady >= 4) break;
+  }
+  if (steady >= 4 && replies && !replies.err) break;
+  console.log(`attempt ${attempt}: ${replies?.err ?? "timed out"}`);
+  await sleep(20_000);
+  await askForReplies();
 }
 if (!replies || replies.err || replies.t.some((text) => text.length <= 25)) {
-  console.error(`No replies: ${replies?.err ?? "timed out"}. The free models are probably busy. Try again later.`);
+  console.error(
+    `No replies after several tries: ${replies?.err ?? "timed out"}. The free models are busy. Try again later.`,
+  );
   await send("Page.stopScreencast");
   process.exit(2);
 }
 meta.typical = replies.t[0];
 meta.sangam = replies.t[1];
 console.log(`typical: ${meta.typical}\nsangam:  ${meta.sangam}`);
-await js(`document.querySelector(".pg-replies").scrollIntoView({ block: "center" })`);
-await sleep(300);
 meta.cuts.push({ from: cutFrom, to: Date.now() / 1000 + (clockOffset ?? 0) });
 mark("s3");
+// Scroll down to the two replies while the narration introduces them.
+await smoothScroll(
+  await js(`Math.max(0, document.querySelector(".pg-replies").getBoundingClientRect().top + window.scrollY - 150)`),
+);
 
 // The Gnani voice is the app's own /api/tts answer for the reply, mixed in later. Fetch it while this scene runs.
 const ttsRequest = fetch(`${BASE}/api/tts`, {

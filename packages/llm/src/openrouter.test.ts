@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { FREE_MODELS, isFreeModel, isLeakedReasoning, OpenRouterProvider, textOfLine } from "./openrouter";
+import {
+  FREE_MODELS,
+  isFreeModel,
+  isLeakedReasoning,
+  OpenRouterProvider,
+  textOfLine,
+  withoutRepeat,
+} from "./openrouter";
 import { LlmUnavailableError } from "./types";
 
 const encoder = new TextEncoder();
@@ -137,21 +144,25 @@ describe("OpenRouterProvider", () => {
     await expect(collect(provider.reply(request))).rejects.toThrow("503");
   });
 
-  it("does not switch models once text has been sent", async () => {
-    // Long enough to pass the opening check, so the person has already seen it.
-    const opening =
-      "Aapka payment kal due hai, please aaj hi kar dijiye, aur agar koi sawaal ho to mujhe zaroor bataiye. ";
-    let calls = 0;
+  it("keeps one copy when a model sends the whole reply twice", async () => {
+    const once = "Samajh sakta hoon meeting kal hai, aapka payment due hai toh jaldi kar dijiye ga.";
     const provider = new OpenRouterProvider({
       apiKey: "k",
-      models: ["a/one:free", "b/two:free"],
-      fetch: async () => {
-        calls += 1;
-        return sse([chunk(opening), `data: ${JSON.stringify({ error: { message: "cut off" } })}`]);
-      },
+      models: ["a/one:free"],
+      fetch: async () => sse([chunk(once), chunk(once), "data: [DONE]"]),
     });
-    await expect(collect(provider.reply(request))).rejects.toThrow("cut off");
-    expect(calls).toBe(1);
+    expect(await collect(provider.reply(request))).toBe(once);
+  });
+
+  it("gives the whole reply as one piece, after reading all of it", async () => {
+    const provider = new OpenRouterProvider({
+      apiKey: "k",
+      models: ["a/one:free"],
+      fetch: async () => sse([chunk("Aapka payment "), chunk("kal due hai."), "data: [DONE]"]),
+    });
+    const pieces: string[] = [];
+    for await (const piece of provider.reply(request)) pieces.push(piece);
+    expect(pieces).toEqual(["Aapka payment kal due hai."]);
   });
 
   it("tries the next model when one fails before any text reaches the person", async () => {
@@ -256,5 +267,15 @@ describe("isLeakedReasoning", () => {
     expect(isLeakedReasoning("Aapka payment kal due hai, please aaj hi kar dijiye.")).toBe(false);
     expect(isLeakedReasoning("Sure, your payment is due on Friday. I can help you pay it now.")).toBe(false);
     expect(isLeakedReasoning("आपका payment कल due है।")).toBe(false);
+  });
+});
+
+describe("withoutRepeat", () => {
+  it("collapses a reply that appears twice and leaves everything else alone", () => {
+    const once = "Aapka payment kal due hai, please aaj hi kar dijiye.";
+    expect(withoutRepeat(once + once)).toBe(once);
+    expect(withoutRepeat(`${once} ${once}`)).toBe(once);
+    expect(withoutRepeat(once)).toBe(once);
+    expect(withoutRepeat("Ok. Ok.")).toBe("Ok. Ok.");
   });
 });
